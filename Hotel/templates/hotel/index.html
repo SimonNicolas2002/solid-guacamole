@@ -92,7 +92,7 @@
 
 			</div>
 			<div class="centered_text">Fast Hotel Andorra</div>
-
+			
 		</div>
 	</header>
 
@@ -107,7 +107,7 @@
 				<a href="{% url 'alojamiento' %}"><button type="button" class="btn btn-primary btn-lg mt-3">Reserva tu Habitación Ahora</button></a>
 			</div>
 		</section>
-
+		
 		</section>
 		<section class="row mt-4 justify-content-center ">
 			<article class="col-11 align-items-start m-3 p-4">
@@ -154,7 +154,13 @@
 			<section class="row  align-items-center mb-5">
 				
 				<article class="col-lg-6 col-xl-6 col-xxl-6 col-md-12 col-sm-12 p-5">
-					<h1 class="mb-4">Explora la Serenidad en Fast Hotel: Un Refugio de Tranquilidad y Bienestar</h1>
+					<h1 class="mb-4">
+						{% if request.user.is_authenticated %}
+							<p>Bienvenido, {{ request.user.username }}!</p>
+						{% else %}
+							<p>You are not logged in.</p>
+						{% endif %}
+						Explora la Serenidad en Fast Hotel: Un Refugio de Tranquilidad y Bienestar</h1>
 					<p>Adéntrate en el oasis de paz que es Fast Hotel, donde hemos creado un santuario dedicado al yoga y 
 						la tranquilidad. Descubre cómo nuestro hotel se ha convertido en un destino de primer nivel, ofreciendo una 
 						experiencia excepcional que combina elegancia, comodidad y servicio de alta calidad para brindar una estancia inigualable.</p>
