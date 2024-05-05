@@ -1,0 +1,29 @@
+main img {
+    border-radius: 10px;
+
+}
+
+body {
+    background-color: rgb(226, 226, 226);
+}
+
+main div section {
+    background-color: white;
+}
+
+nav ul {
+    margin-right: 180px;
+}
+
+nav li {
+    margin-left: 60px;
+}
+
+.slight-margin_left {
+    margin-left: 30px;
+}
+
+.text-justify {
+    text-align: justify;
+}
+

@@ -1,0 +1,23 @@
+body {
+    background-color: rgb(244, 248, 253);
+
+}
+
+.white {
+    background-color: white;
+}
+
+img {
+    max-height: 80%;
+}
+
+hr {
+    text-align: center;
+    width: fit-content;
+}
+
+
+.portrait{
+    height: 60px;
+    width: 60px;
+}

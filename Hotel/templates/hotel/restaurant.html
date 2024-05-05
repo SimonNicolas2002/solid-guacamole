@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="img/logo/artjam-high-resolution-logo-transparent.png" />
+
+    <link rel="stylesheet" href="{% static 'css/service_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg">
+            <div class="container-fluid ">
+                <a class="navbar-brand slight-margin_left" href="#">
+                    <img src="{% static 'img/logo/artjam-high-resolution-logo-transparent.png' %}" width="40" height="40" alt="">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                    <ul class="navbar-nav my-3">
+                        <li class="nav-item ">
+                            <a class="nav-link active" aria-current="page" href="index.html"><i
+                                    class="bi bi-house-door-fill"></i> Inicio</a>
+                        </li>
+                        <li class="nav-item dropdown ">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownArtistas" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-palette-fill"></i> Artistas
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownArtistas">
+                                <li><a class="dropdown-item" href="artist.html#brandy-section">Brenda</a></li>
+                                <li><a class="dropdown-item" href="artist.html#madoona-section">Madoona</a></li>
+                                <li><a class="dropdown-item" href="artist.html#glenn-danzig-section">Glenn</a></li>
+
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="artist.html">Ver todos los artistas</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="services.html"><i class="bi bi-tools"></i> Servicios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="form.html"><i class="bi bi-envelope-fill"></i> Contacto</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container p-5 white my-5 shadow-lg">
+        <section class="row text-center">
+            <article class="col-12">
+                <h1 class="mb-5">Restaurante del Hotel</h1>
+                <img src="{% static 'img/TOO_restaurant_Panoramique_vue_Paris_nuit_v2-scaled.jpg' %}" alt="Restaurante"
+                    class="img-fluid shadow-lg">
+            </article>
+            <article class="col-12 text-start p-5  bg-dark text-light shadow-lg">
+                <h2>Descripción</h2>
+                <p>
+                    Embárcate en un viaje culinario en nuestro restaurante en el hotel. Desde el desayuno hasta la cena, nuestro menú elaborado por chefs ofrece una variedad de platos preparados con ingredientes frescos. Únete a nosotros para una experiencia gastronómica exquisita sin salir del hotel.
+                </p>
+            </article>
+            <article class="col-12 text-start p-5 border shadow-lg my-5">
+                <h2>Calidad y Sabor</h2>
+                <p>
+                    Disfruta de la calidad excepcional y el sabor delicioso en cada plato que servimos en nuestro restaurante. Nuestros chefs expertos utilizan solo los ingredientes más frescos y de la más alta calidad para ofrecerte una experiencia culinaria inolvidable.
+                </p>
+                <p>
+                    Desde platos tradicionales hasta creaciones innovadoras, nuestro menú está diseñado para satisfacer todos los paladares y para garantizar una experiencia gastronómica que deleitará tus sentidos.
+                </p>
+            </article>
+            <article class="col-12 text-start p-5">
+                <h2>Testimonios</h2>
+                <hr>
+            </article>
+            <hr>
+        </section>
+        <section class="row justify-content-center ">
+            <article class="col-lx-3 col-lxx-3 col-lg-3  col-sm-12 border p-5 m-3 shadow-lg text-center">
+                <img src="{% static 'img/portrait/AvatarMaker.png' %}" alt="" class="img-fluid rounded-5 portrait">
+                <p class="my-3">¡La mejor experiencia gastronómica que he tenido!</p>
+                <p>María López</p>
+            </article>
+    
+            <article class="col-lx-3 col-lxx-3 col-lg-3  col-sm-12 border m-3 p-5 shadow-lg text-center">
+                <img src="{% static 'img/portrait/AvatarMaker (1).png' %}" alt="" class="img-fluid rounded-5 portrait">
+                <p class="my-3">¡Ambiente increíble y comida excepcional!</p>
+                <p>Javier García</p>
+            </article>
+    
+            <article class="col-lx-3 col-lxx-3 col-lg-3  col-sm-12 border m-3 p-5 shadow-lg text-center">
+                <img src="{% static 'img/portrait/AvatarMaker (2).png' %}" alt="" class="img-fluid rounded-5 portrait">
+                <p class="my-3">¡Volveré pronto para disfrutar de más deliciosos platos!</p>
+                <p>Elena Rodríguez</p>
+            </article>
+        </section>
+    </main>
+    
+
+
+    <footer class="text-center text-lg-start text-white bg-dark">
+		<div class="container p-4 pb-0">
+			<section class="">
+				<div class="row">
+					<div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+						<h6 class="text-uppercase mb-4 font-weight-bold">
+							Artjam
+						</h6>
+						<p>
+							Welcome to Artjam, the premier destination for music and arts enthusiasts! Get ready to
+							immerse yourself in a
+							world of creativity and inspiration at this year's most anticipated festival.
+						</p>
+					</div>
+
+					<hr class="w-100 clearfix d-md-none" />
+
+					<div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+						<h6 class="text-uppercase mb-4 font-weight-bold">Performances</h6>
+						<p>
+							<a class="text-white" href="artist.html#brandy-section">Brandy</a>
+						</p>
+						<p>
+							<a class="text-white" href="artist.html#madoona-section">Madoona</a>
+						</p>
+						<p>
+							<a class="text-white" href="artist.html#glenn-danzig-section">Glenn</a>
+						</p>
+					</div>
+
+					<hr class="w-100 clearfix d-md-none" />
+
+					<div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+						<h6 class="text-uppercase mb-4 font-weight-bold">
+							Festival Info
+						</h6>
+						<p>
+							<a class="text-white" href="form.html">Tickets</a><i class="bi bi-ticket m-2"></i>
+						</p>
+						<p>
+							<a class="text-white" href="form.html">Location</a><i class="bi bi-geo-alt-fill m-2"></i>
+						</p>
+						<p>
+							<a class="text-white" href="form.html">FAQs</a><i class="bi bi-chat-square-text m-2"></i>
+						</p>
+					</div>
+
+					<hr class="w-100 clearfix d-md-none" />
+
+					<div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+						<h6 class="text-uppercase mb-4 font-weight-bold">Contact</h6>
+						<p>
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+								class="bi bi-geo-alt" viewBox="0 0 16 16">
+								<path
+									d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10" />
+								<path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+							</svg>Music Festival Plaza, Music City, MF 12345
+						</p>
+						<p>
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+								class="bi bi-envelope" viewBox="0 0 16 16">
+								<path
+									d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
+							</svg>
+							info@musicfestival.com
+						</p>
+						<p><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+								class="bi bi-phone" viewBox="0 0 16 16">
+								<path
+									d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+								<path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+							</svg> +1 234 567 8901</p>
+					</div>
+				</div>
+			</section>
+
+			<hr class="my-3">
+
+			<section class="p-3 pt-0">
+				<div class="row d-flex align-items-center">
+					<div class="col-md-7 col-lg-8 text-center text-md-start">
+						<div class="p-3">
+							© 2024 Artjam Music Festival. All rights reserved.
+						</div>
+					</div>
+
+					<div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end ">
+						<a class="btn btn-outline-light btn-floating m-1" href="#"><i class="fab fa-facebook-f"></i></a>
+						<a class="btn btn-outline-light btn-floating m-1" href="#"><i class="fab fa-twitter"></i></a>
+						<a class="btn btn-outline-light btn-floating m-1" href="#"><i class="fab fa-instagram"></i></a>
+						<a class="btn btn-outline-light btn-floating m-1" href="#"><i class="fab fa-youtube"></i></a>
+					</div>
+				</div>
+			</section>
+		</div>
+	</footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

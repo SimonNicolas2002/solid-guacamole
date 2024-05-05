@@ -1,0 +1,25 @@
+
+nav ul {
+    margin-right: 180px;
+}
+
+nav li {
+    margin-left: 60px;
+}
+
+.slight-margin_left {
+    margin-left: 30px;
+}
+
+
+.navbar {
+    font-weight: 700;
+    font-size: larger;
+}
+
+@media (min-width: 992px) {
+    .navbar li:hover {
+      color: rgb(244, 248, 253);
+      
+    }
+  }

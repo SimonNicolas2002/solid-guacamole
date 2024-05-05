@@ -1,0 +1,511 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Festival de Música Artjam</title>
+
+	
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<link rel="shortcut icon" type="image/x-icon" href="img/logo/artjam-high-resolution-logo-transparent.png" />
+
+
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+	<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+	<style>
+		.container-image {
+			position: relative;
+			text-align: center;
+			color: white;
+		}
+
+		.centered_text {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 5em;
+			text-shadow: 5px 5px 5px black;
+		}
+		.h3s {
+			margin-bottom: 1000px;
+		}
+		.mlr {
+			margin-right: 85px;
+		}
+		
+	</style>
+</head>
+
+<body>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg">
+			<div class="container-fluid ">
+				<a class="navbar-brand slight-margin_left" href="#">
+					<img src="{% static 'img/logo/artjam-high-resolution-logo-transparent (1).png' %}" width="40" height="40" alt="">
+				</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+					data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+					<ul class="navbar-nav my-3">
+						<li class="nav-item ">
+							<a class="nav-link active" aria-current="page" href="index.html"> Inicio</a>
+						</li>
+						<li class="nav-item dropdown ">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownArtistas" role="button"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								 Artistas
+							</a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdownArtistas">
+								<li><a class="dropdown-item" href="artist.html#brandy-section">Brenda</a></li>
+								<li><a class="dropdown-item" href="artist.html#madoona-section">Madoona</a></li>
+								<li><a class="dropdown-item" href="artist.html#glenn-danzig-section">Glenn</a></li>
+
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<li><a class="dropdown-item" href="artist.html">Ver todos los artistas</a></li>
+							</ul>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="services.html">Servicios</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="form.html"> Contacto</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="container-image">
+
+			<div class="parallax">
+
+			</div>
+			<div class="centered_text">Fast Hotel Andorra</div>
+
+		</div>
+	</header>
+
+
+
+	<div class="container mb-5">
+		<section class="row bg-dark text-light py-5 bottom_round mb-5 shadow-lg">
+			<div class="col-12 text-center">
+				<h1 class="display-3 mb-4">¡Descubre una Experiencia Única!</h1>
+				<p>Sumérgete en una experiencia de hospitalidad sin igual. Únete a nosotros para disfrutar de momentos memorables de confort, lujo y servicio excepcional.</p>
+				<p>¿Estás listo para vivir una estancia inolvidable?</p>
+				<a href="{% url 'alojamiento' %}"><button type="button" class="btn btn-primary btn-lg mt-3">Reserva tu Habitación Ahora</button></a>
+			</div>
+		</section>
+
+		</section>
+		<section class="row mt-4 justify-content-center ">
+			<article class="col-11 align-items-start m-3 p-4">
+				<a href="{% url 'services' %}"
+					class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">
+
+					<h1>Que puedes esperar de nosotros?</h1>
+				</a>
+			</article>
+			<article
+				class=" shadow-sm col-lg-5 col-xl-5 col-xxl-5 col-md-11 col-sm-11 rounded-4 gray d-flex flex-column align-items-start m-3 p-3">
+				<h5>Experiencia de Lujo</h5>
+				<p class="justify-text">Sumérgete en una experiencia de lujo y sofisticación en nuestro exclusivo hotel, donde encontrarás una combinación única de comodidad, elegancia y servicio excepcional.</p>
+			</article>
+			<article
+				class=" shadow-sm col-lg-5 col-xl-5 col-xxl-5 col-md-11 col-sm-11 rounded-4 gray d-flex flex-column align-items-start m-3 p-3">
+				<h5>Galería de Arte</h5>
+				<p class="justify-text">Explora nuestra galería de arte cuidadosamente curada, que presenta obras de artistas locales e internacionales reconocidos en diversas disciplinas. Disfruta de la belleza y la inspiración que ofrecen estas obras de arte excepcionales.</p>
+			</article>
+			<article
+				class=" shadow-sm col-lg-5 col-xl-5 col-xxl-5 col-md-11 col-sm-11 rounded-4 gray d-flex flex-column align-items-start m-3 p-3">
+				<h5>Actividades Culturales</h5>
+				<p class="justify-text">Aprovecha nuestras actividades culturales y creativas, diseñadas para despertar tu curiosidad y nutrir tu espíritu artístico. Participa en talleres de arte, clases de cocina gourmet	 y recorridos por la ciudad para descubrir su rica historia y cultura.</p>
+			</article>
+			<article
+				class=" shadow-sm col-lg-5 col-xl-5 col-xxl-5 col-md-11 col-sm-11 rounded-4 gray d-flex flex-column align-items-start m-3 p-3">
+				<h5>Encuentra Tu Paz Interior</h5>
+				<p class="justify-text">Encuentra tu paz interior y rejuvenece tu mente, cuerpo y espíritu con nuestras experiencias de bienestar y relajación. Desde sesiones de yoga al amanecer hasta tratamientos de spa indulgentes.</p>
+			</article>
+		</section>
+
+	</div>
+
+
+	<main class="container-fluid  blue">
+
+
+		<section class="row my-5">
+		</section>
+
+
+		<div class="container">
+
+			<section class="row  align-items-center mb-5">
+				
+				<article class="col-lg-6 col-xl-6 col-xxl-6 col-md-12 col-sm-12 p-5">
+					<h1 class="mb-4">Explora la Serenidad en Fast Hotel: Un Refugio de Tranquilidad y Bienestar</h1>
+					<p>Adéntrate en el oasis de paz que es Fast Hotel, donde hemos creado un santuario dedicado al yoga y 
+						la tranquilidad. Descubre cómo nuestro hotel se ha convertido en un destino de primer nivel, ofreciendo una 
+						experiencia excepcional que combina elegancia, comodidad y servicio de alta calidad para brindar una estancia inigualable.</p>
+					<ul>
+						<li>Retiro de Yoga de Clase Mundial</li>
+						<li>Tranquilidad en Cada Rincón</li>
+					</ul>
+					<a href="{% url 'services' %}"><button type="button" class="btn btn-primary btn-lg mt-3">Leer más</button></a>
+				</article>
+
+				<article
+					class=" col-lg-6 col-xl-6 col-xxl-6 col-md-12 col-sm-12 order-md-first order-sm-first order-first">
+					<img src="{% static 'img/yoga.img' %}" class="rounded mx-auto d-block"
+						alt="Music art">
+				</article>
+
+			</section>
+
+			<section class="row  align-items-center">
+
+				<article class="col-lg-6 col-xl-6 col-xxl-6 col-md-12 col-sm-12 p-5 text-lg-end text-start">
+					<h1 class="mb-4">Viaja en las Delicias de Fast Hotel: Una Experiencia Multisensorial</h1>
+					<p>Fast Hotel te lleva en un viaje culinario único, fusionando exquisitos sabores con el 
+						arte y la innovación. Sumérgete en una experiencia donde la gastronomía, el arte y la creatividad se entrelazan 
+						para ofrecerte momentos inolvidables.</p>
+					<ul class="dot_right">
+						<li>Gastronomía Innovadora</li>
+						<li>Innovación en Experiencias</li>
+					</ul>
+					<a href="{% url 'services' %}"><button type="button" class="btn btn-primary btn-lg mt-3">Leer
+							más</button></a>
+				</article>
+
+				<article
+					class=" col-lg-6 col-xl-6 col-xxl-6 col-md-12 col-sm-12 order-lg-last order-xl-last order-xxl-last order-sm-first order-md-first order-first ">
+					<img src="{% static 'img/Food/image1.jpg' %}" class="rounded mx-auto d-block" alt="Music art">
+				</article>
+
+			</section>
+
+		</div>
+		<div class="container-fluid blue">
+			<div class="row">
+				<div class="col my-5"></div>
+			</div>
+		</div>
+	</main>
+
+	
+	
+	<aside class="special borde bg-dark">
+		<div class="container">
+			<div class="row my-5">
+				<div class="col-12">
+					<a href="{% url 'services' %}" class="text-center">
+						<h2 class="display-5  text-light mt-4">Habitaciones</h2>
+					</a>
+				</div>
+			</div>
+			<div class="row my-5 justify-content-lg-center justify-content-xl-between justify-content-xxl-between">
+				<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+					<ol class="carousel-indicators">
+						<li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
+						<li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
+						<li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+					</ol>
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<div class="d-flex justify-content-center mlr">
+								<div class="col-lg-12 col-xl-3 col-xxl-3 col-md-12 col-sm-12 col-xs-12 my-5">
+									<div class="card mx-auto align-items-center ">
+										<div class="image">
+											<img src="{% static 'img/suits/biolc-deluxe-guestroom-6547-hor-clsc.png' %}">
+										</div>
+										<h3 class="m-0">Single Room</h3>
+										<div class="content">
+											<p>Disfruta de la comodidad y elegancia de nuestra habitación individual. Perfecta para aquellos que buscan privacidad y confort durante su estancia en Fast Hotel.</p>
+											<a href="artist.html#brandy-section">
+												<button type="button" class="btn btn-primary btn-lg mt-3">Leer más</button>
+											</a>
+	
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="carousel-item">
+							<div class="d-flex justify-content-center mlr"> 
+								<div class="col-lg-12 col-xl-3 col-xxl-3 col-md-12 col-sm-12 col-xs-12 my-5">
+									<div class="card mx-auto align-items-center ">
+										<div class="image">
+											<img src="{% static 'img/suits/biolc-premium-sparoom-8961-hor-clsc.png' %}">
+										</div>
+										<div class="title">
+											<h3 class="m-0">Suite</h3>
+										</div>
+										<div class="content">
+											<p>Sumérgete en el lujo y la exclusividad de nuestras suites. Diseñadas para ofrecerte una experiencia inolvidable, nuestras suites son el lugar perfecto para relajarte y recargar energías.</p>
+											<a href="artist.html#madoona-section">
+												<button type="button" class="btn btn-primary btn-lg mt-3">Leer más</button>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="carousel-item">
+							<div class="d-flex justify-content-center mlr"> 
+								<div class="col-lg-12 col-xl-3 col-xxl-3 col-md-12 col-sm-12 col-xs-12 my-5 ">
+									<div class="card mx-auto align-items-center">
+										<div class="image">
+											<img href="#" src="{% static 'img/suits/biolc-premium-sparoom-8964-hor-clsc.png' %}">
+										</div>
+										<div class="title">
+											<h3 class="m-0">Junior Suite</h3>
+										</div>
+										<div class="content">
+											<p>Experimenta el lujo y la amplitud de nuestras suites junior. Con un diseño moderno y todas las comodidades que puedas desear, nuestras junior suites son el refugio perfecto.</p>
+											<a href="artist.html#glenn-danzig-section">
+												<button type="button" class="btn btn-primary btn-lg mt-3">Leer más</button>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				</div>
+	
+	
+				<div class="col-12 my-5">
+					<p></p>
+				</div>
+	
+			</div>
+		</div>
+	</aside>
+	
+
+	<div class="container">
+		<div class="row my-5">
+			<div class="col-12">
+
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid my-5">
+		<div class="row">
+			<div class="col">
+				<section id="price-section">
+					<div class="container">
+						<div class="row justify-content-center gapsectionsecond">
+							<div class="col-lg-7 text-center">
+								<div class="title-big pb-3 mb-3">
+									<h1>¡Reserva Ahora Nuestras Habitaciones Más Solicitadas!</h1>
+								</div>
+								<p class="description-p text-muted pe-0 pe-lg-0">
+									Asegura tu estancia en Fast Hotel, un lugar donde la elegancia y la comodidad se unen
+									para brindarte una experiencia inolvidable. Reserva ahora y disfruta de nuestra
+									hospitalidad excepcional.
+								</p>
+							</div>
+						</div>
+						<div class="row pt-5">
+							<div class="col-lg-4 pb-5 pb-lg-0">
+								<div class="wrap-price">
+									<div class="price-innerdetail text-center">
+										<h2 class="display-3">Individual</h2>
+										<p class="prices">50$</p>
+										<div class="detail-pricing">
+											<span class="float-left"><i class="bi bi-check2-circle margin_top"></i>
+												Acceso a la habitación individual</span>
+										</div>
+										<div class="detail-pricing">
+											<span class="float-left"><i class="bi bi-check2-circle margin_top"></i>
+												Servicio de atención al cliente básico</span>
+										</div>
+										<a href="#" class="btn btn-secondary mt-5">Reservar ahora</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4 pb-5 pb-lg-0">
+								<div class="wrap-price center-wrap">
+									<div class="price-innerdetail text-center ">
+										<h2 class="display-3">Doble</h2>
+										<p class="prices">100$</p>
+										<div class="detail-pricing">
+											<span class="float-left"><i class="bi bi-check2-circle margin_top"></i>
+												Acceso a la habitación doble</span>
+										</div>
+										<div class="detail-pricing">
+											<span class="float-left"><i class="bi bi-check2-circle margin_top"></i>
+												Servicio de atención al cliente básico</span>
+										</div>
+										<a href="#" class="btn btn-secondary mt-5">Reservar ahora</a>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4 pb-5 pb-lg-0">
+								<div class="wrap-price">
+									<div class="price-innerdetail text-center">
+										<h2 class="display-3">Suite</h2>
+										<p class="prices">200$</p>
+										<div class="detail-pricing">
+											<span class="float-left"><i class="bi bi-check2-circle margin_top"></i>
+												Acceso a la suite</span>
+										</div>
+										<div class="detail-pricing">
+											<span class="float-left"><i class="bi bi-check2-circle margin_top"></i>
+												Servicio de atención al cliente premium</span>
+										</div>
+										<a href="#" class="btn btn-secondary mt-5">Reservar ahora</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
+	
+	
+
+	<div class="container">
+		<div class="row my-5">
+			<div class="col-12">
+
+			</div>
+		</div>
+	</div>
+
+	<footer class="text-center text-lg-start text-white bg-dark">
+		<div class="container p-4 pb-0">
+			<section class="">
+				<div class="row">
+					<div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+						<h6 class="text-uppercase mb-4 font-weight-bold">
+							Fast Hotel
+						</h6>
+						<p>
+							Welcome to Fast Hotel, the premier destination for relaxation and comfort! Get ready to immerse yourself in a 
+							world of luxury and tranquility at our exceptional hotel.
+						</p>
+					</div>
+
+					<hr class="w-100 clearfix d-md-none" />
+
+					<div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+						<h6 class="text-uppercase mb-4 font-weight-bold">Performances</h6>
+						<p>
+							<a class="text-white" href="artist.html#brandy-section">Brandy</a>
+						</p>
+						<p>
+							<a class="text-white" href="artist.html#madoona-section">Madoona</a>
+						</p>
+						<p>
+							<a class="text-white" href="artist.html#glenn-danzig-section">Glenn</a>
+						</p>
+					</div>
+
+					<hr class="w-100 clearfix d-md-none" />
+
+					<div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+						<h6 class="text-uppercase mb-4 font-weight-bold">
+							Festival Info
+						</h6>
+						<p>
+							<a class="text-white" href="form.html">Location</a><i class="bi bi-geo-alt-fill m-2"></i>
+						</p>
+						<p>
+							<a class="text-white" href="form.html">Form</a><i class="bi bi-ticket m-2"></i>
+						</p>
+						<p>
+							<a class="text-white" href="form.html">Reviews</a><i class="bi bi-chat-square-text m-2"></i>
+						</p>
+					</div>
+
+					<hr class="w-100 clearfix d-md-none" />
+
+					<div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+						<h6 class="text-uppercase mb-4 font-weight-bold">Information</h6>
+						<p>
+							Andorra la vella
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+								class="bi bi-geo-alt" viewBox="0 0 16 16">
+								<path
+									d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10" />
+								<path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+							</svg>
+						</p>
+						<p>
+							info@fasthotel.com
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+								class="bi bi-envelope" viewBox="0 0 16 16">
+								<path
+									d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
+							</svg>
+						</p>
+						<p>
+							+1 234 567 8901
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+								class="bi bi-phone" viewBox="0 0 16 16">
+								<path
+									d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+								<path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+							</svg> </p>
+					</div>
+				</div>
+			</section>
+
+			<hr class="my-3">
+
+			<section class="p-3 pt-0">
+				<div class="row d-flex align-items-center">
+					<div class="col-md-7 col-lg-8 text-center text-md-start">
+						<div class="p-3">
+							© 2024 Fast Hotel lux hotel. All rights reserved.
+						</div>
+					</div>
+
+					<div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end ">
+						<a class="btn btn-outline-light btn-floating m-1" href="#"><i class="fab fa-facebook-f"></i></a>
+						<a class="btn btn-outline-light btn-floating m-1" href="#"><i class="fab fa-twitter"></i></a>
+						<a class="btn btn-outline-light btn-floating m-1" href="#"><i class="fab fa-instagram"></i></a>
+						<a class="btn btn-outline-light btn-floating m-1" href="#"><i class="fab fa-youtube"></i></a>
+					</div>
+				</div>
+			</section>
+		</div>
+	</footer>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+		
+	</script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+	integrity="sha384-Tx/xGuj0NLX0UiMj02LQzDqJgJ/fS2r3bOK9KMI5OGnlZxCSthAD2HByFihvA+67"
+	crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+		integrity="sha384-J50JSk/y7pT/Qm5rzJ+poFpFiaF7ltOHDeA7TxVgcvPQ9vAgFjc19p/NbZXMN3pK"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>
