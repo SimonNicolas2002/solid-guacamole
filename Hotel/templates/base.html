@@ -14,33 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/logo/artjam-high-resolution-logo-transparent.png' %}" />
 
-    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
-
-    <style>
-        .container-image {
-            position: relative;
-            text-align: center;
-            color: white;
-        }
-
-        .centered_text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 5em;
-            text-shadow: 5px 5px 5px black;
-        }
-
-        .h3s {
-            margin-bottom: 1000px;
-        }
-
-        .mlr {
-            margin-right: 85px;
-        }
-    </style>
+    {% block css %}{% endblock %}
 </head>
 
 <body>

@@ -14,33 +14,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 	<link rel="shortcut icon" type="image/x-icon" href="img/logo/artjam-high-resolution-logo-transparent.png" />
 
-
-    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+	<link rel="stylesheet" href="{% static 'css/nav.css' %}">
 	<link rel="stylesheet" href="{% static 'css/index.css' %}">
-
-	<style>
-		.container-image {
-			position: relative;
-			text-align: center;
-			color: white;
-		}
-
-		.centered_text {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			font-size: 5em;
-			text-shadow: 5px 5px 5px black;
-		}
-		.h3s {
-			margin-bottom: 1000px;
-		}
-		.mlr {
-			margin-right: 85px;
-		}
-		
-	</style>
 </head>
 
 <body>
@@ -92,7 +67,38 @@
 
 			</div>
 			<div class="centered_text">Fast Hotel Andorra</div>
-			
+			<div class="centered_form">
+				{% if user.is_authenticated %}
+				<form method="post" action="{% url 'index' %}">
+					{% csrf_token %}
+					<div class="form-inline">
+						<div class="form-group">
+							<label for="check_in_date">Check-in Date:</label>
+							<input type="date" class="form-control text-center" id="check_in_date" name="check_in_date">
+						</div>
+						<br/>
+						<div class="form-group">
+							<label for="check_out_date">Check-out Date:</label>
+							<input type="date" class="form-control text-center" id="check_out_date" name="check_out_date">
+						</div>
+						<br/>
+						<div class="form-group">
+							<label for="room">Rooms :</label>
+							<select class="form-control text-center" id="room" name="room">
+								{% for room in rooms %}
+								<option value="{{ room.room_number }}">Type: {{ room.category }} ---	Room Number: {{ room.room_number }}</option>
+								{% endfor %}
+							</select>
+						</div> <br>
+						<button type="submit" class="btn btn-primary">Make reservation</button>
+					</div>
+				</form>
+				
+				
+				{% else %}
+					<p>Porfavor <a href="{% url 'signup' %}">registrese</a> para realizar una reserva.</p>
+				{% endif %}
+			</div>			
 		</div>
 	</header>
 

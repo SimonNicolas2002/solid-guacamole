@@ -200,6 +200,40 @@ aside div a:hover {
     margin-top: -12px;
 }
 
+.container-image {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.centered_text {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5em;
+    text-shadow: 5px 5px 5px black;	
+}
+
+.centered_form {
+    position: absolute;
+    width: 25%;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.4em;
+    text-shadow: 5px 5px 5px black;
+    text-align: center;
+}
+
+.h3s {
+    margin-bottom: 1000px;
+}
+
+.mlr {
+    margin-right: 85px;
+}
+
 @media (max-width: 992px) {
     .dot_right {
         direction: ltr;

@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm
-from .models import CustomUser
+from .models import CustomUser, Reservation
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 
@@ -13,3 +13,9 @@ class CustomUserCreationForm(UserCreationForm):
 class CustomAuthenticationForm(AuthenticationForm):
     class Meta:
         model = CustomUser
+
+
+class ReservationForm(forms.ModelForm):
+    class Meta:
+        model = Reservation
+        fields = ['check_in_date', 'check_out_date', 'room']

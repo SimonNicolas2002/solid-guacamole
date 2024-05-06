@@ -2,9 +2,11 @@ from django.urls import path
 from django.views.generic import TemplateView
 from .views import SignUp, CustomLoginView
 from . import views
+from .views import make_reservation
+
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="hotel/index.html"), name="index"),
+    path("", make_reservation, name="index"),
     path("alojamiento/", TemplateView.as_view(template_name="hotel/alojamiento.html"), name="alojamiento"),
     path("artist/", TemplateView.as_view(template_name="hotel/artist.html"), name="artist"),
     path("events_reunion/", TemplateView.as_view(template_name="hotel/events_reunion.html"), name="events_reunion"),
