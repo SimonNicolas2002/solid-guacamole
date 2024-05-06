@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/nav.css' %}">
+{% endblock %}
+{% block content %}
+<h1>Current Reservations</h1>
+{% if current_reservations %}
+	{% for reservation in current_reservations %}
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Reservation ID: {{ reservation.pk }}</h5>
+				<p class="card-text">Check-in Date: {{ reservation.check_in_date }}</p>
+				<p class="card-text">Check-out Date: {{ reservation.check_out_date }}</p>
+				<p class="card-text">Status: {{ reservation.status }}</p>
+			</div>
+		</div>
+	{% endfor %}
+{% else %}
+	<p>No current reservations.</p>
+{% endif %}
+
+<h1>Reservation History</h1>
+{% if reservation_history %}
+	{% for reservation in reservation_history %}
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Reservation ID: {{ reservation.pk }}</h5>
+				<p class="card-text">Check-in Date: {{ reservation.check_in_date }}</p>
+				<p class="card-text">Check-out Date: {{ reservation.check_out_date }}</p>
+				<p class="card-text">Status: {{ reservation.status }}</p>
+			</div>
+		</div>
+	{% endfor %}
+{% else %}
+	<p>No reservation history.</p>
+{% endif %}
+
+{% endblock %}

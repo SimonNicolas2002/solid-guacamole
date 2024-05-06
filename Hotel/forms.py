@@ -5,9 +5,11 @@ from django.contrib.auth.forms import AuthenticationForm
 
 
 class CustomUserCreationForm(UserCreationForm):
+    surname = forms.CharField(max_length=30)
+
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = UserCreationForm.Meta.fields + ('name', 'phone_number', 'nationality', 'gender')
+        fields = UserCreationForm.Meta.fields + ('username', 'first_name', 'surname', 'phone_number', 'nationality', 'gender')
 
     
 class CustomAuthenticationForm(AuthenticationForm):
@@ -19,3 +21,12 @@ class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
         fields = ['check_in_date', 'check_out_date', 'room']
+
+
+class AnonymousReservationForm(forms.ModelForm):
+    class Meta:
+        model = Reservation
+        fields = ['check_in_date', 'check_out_date', 'room', 'name', 'surname']
+
+    name = forms.CharField(required=True)
+    surname = forms.CharField(required=True)

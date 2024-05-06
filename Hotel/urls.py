@@ -2,11 +2,14 @@ from django.urls import path
 from django.views.generic import TemplateView
 from .views import SignUp, CustomLoginView
 from . import views
-from .views import make_reservation
+from .views import make_reservation, logout_view, make_anonymous_reservation, reservas
 
 
 urlpatterns = [
     path("", make_reservation, name="index"),
+    path("reservation/", make_anonymous_reservation, name="reservation"),
+    path("reservaitons/", reservas, name="reservations"),
+    path('reservation_success/', TemplateView.as_view(template_name="hotel/reservation_success.html"), name='reservation_success'),
     path("alojamiento/", TemplateView.as_view(template_name="hotel/alojamiento.html"), name="alojamiento"),
     path("artist/", TemplateView.as_view(template_name="hotel/artist.html"), name="artist"),
     path("events_reunion/", TemplateView.as_view(template_name="hotel/events_reunion.html"), name="events_reunion"),
@@ -16,4 +19,5 @@ urlpatterns = [
     path("spa/", TemplateView.as_view(template_name="hotel/spa.html"), name="spa"),
     path('signup/', SignUp.as_view(template_name="registration/signup.html"), name='signup'),
     path('login/', CustomLoginView.as_view(template_name="registration/login.html"), name='login'),
+    path('logout/', logout_view, name='logout'),
 ]

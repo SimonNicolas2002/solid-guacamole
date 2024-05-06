@@ -1,66 +1,12 @@
+{% extends 'base.html' %}
 {% load static %}
-<!doctype html>
-<html lang="en">
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/nav.css' %}">
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/index_header.css' %}">
+{% endblock %}
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Festival de Música Artjam</title>
-
-	
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-	<link rel="shortcut icon" type="image/x-icon" href="img/logo/artjam-high-resolution-logo-transparent.png" />
-
-	<link rel="stylesheet" href="{% static 'css/nav.css' %}">
-	<link rel="stylesheet" href="{% static 'css/index.css' %}">
-</head>
-
-<body>
-	<header>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-lg">
-			<div class="container-fluid ">
-				<a class="navbar-brand slight-margin_left" href="#">
-					<img src="{% static 'img/logo/artjam-high-resolution-logo-transparent (1).png' %}" width="40" height="40" alt="">
-				</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-					data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-					aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-					<ul class="navbar-nav my-3">
-						<li class="nav-item ">
-							<a class="nav-link active" aria-current="page" href="index.html"> Inicio</a>
-						</li>
-						<li class="nav-item dropdown ">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownArtistas" role="button"
-								data-bs-toggle="dropdown" aria-expanded="false">
-								 Artistas
-							</a>
-							<ul class="dropdown-menu" aria-labelledby="navbarDropdownArtistas">
-								<li><a class="dropdown-item" href="artist.html#brandy-section">Brenda</a></li>
-								<li><a class="dropdown-item" href="artist.html#madoona-section">Madoona</a></li>
-								<li><a class="dropdown-item" href="artist.html#glenn-danzig-section">Glenn</a></li>
-
-								<li>
-									<hr class="dropdown-divider">
-								</li>
-								<li><a class="dropdown-item" href="artist.html">Ver todos los artistas</a></li>
-							</ul>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="services.html">Servicios</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="form.html"> Contacto</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+{% block content %}
 		<div class="container-image">
 
 			<div class="parallax">
@@ -68,41 +14,43 @@
 			</div>
 			<div class="centered_text">Fast Hotel Andorra</div>
 			<div class="centered_form">
-				{% if user.is_authenticated %}
 				<form method="post" action="{% url 'index' %}">
 					{% csrf_token %}
-					<div class="form-inline">
-						<div class="form-group">
-							<label for="check_in_date">Check-in Date:</label>
-							<input type="date" class="form-control text-center" id="check_in_date" name="check_in_date">
-						</div>
-						<br/>
-						<div class="form-group">
-							<label for="check_out_date">Check-out Date:</label>
-							<input type="date" class="form-control text-center" id="check_out_date" name="check_out_date">
-						</div>
-						<br/>
-						<div class="form-group">
-							<label for="room">Rooms :</label>
-							<select class="form-control text-center" id="room" name="room">
-								{% for room in rooms %}
-								<option value="{{ room.room_number }}">Type: {{ room.category }} ---	Room Number: {{ room.room_number }}</option>
-								{% endfor %}
-							</select>
-						</div> <br>
-						<button type="submit" class="btn btn-primary">Make reservation</button>
+					<div class="form-group">
+						<label for="check_in_date">Check-in Date:</label>
+						<input type="date" class="form-control text-center" id="check_in_date" name="check_in_date" value="{{ check_in_date }}">
+						{% if form.errors.check_in_date %}
+							<p class="normal_text">{{ form.errors.check_in_date }}</p>
+						{% endif %}
 					</div>
+					<br/>
+					<div class="form-group">
+						<label for="check_out_date">Check-out Date:</label>
+						<input type="date" class="form-control text-center" id="check_out_date" name="check_out_date" value="{{ check_out_date }}">
+						{% if form.errors.check_out_date %}
+							<p class="text-danger">{{ form.errors.check_out_date }}</p>
+						{% endif %}
+					</div>
+					<br/>
+					<div class="form-group">
+						<label for="room">Rooms :</label>
+						<select class="form-control text-center" id="room" name="room">
+							{% for room in rooms %}
+								<option value="{{ room.room_number }}">Type: {{ room.category }} --- Room Number: {{ room.room_number }}</option>
+							{% endfor %}
+						</select>
+						{% if form.errors.room %}
+							<p class="text-danger">{{ form.errors.room }}</p>
+						{% endif %}
+					</div>
+					<br>
+					{% if form.non_field_errors %}
+						<p class="text-danger">{{ form.non_field_errors }}</p>
+					{% endif %}
+					<button type="submit" class="btn btn-primary">Make reservation</button>
 				</form>
-				
-				
-				{% else %}
-					<p>Porfavor <a href="{% url 'signup' %}">registrese</a> para realizar una reserva.</p>
-				{% endif %}
-			</div>			
+			</div>
 		</div>
-	</header>
-
-
 
 	<div class="container mb-5">
 		<section class="row bg-dark text-light py-5 bottom_round mb-5 shadow-lg">
@@ -110,7 +58,7 @@
 				<h1 class="display-3 mb-4">¡Descubre una Experiencia Única!</h1>
 				<p>Sumérgete en una experiencia de hospitalidad sin igual. Únete a nosotros para disfrutar de momentos memorables de confort, lujo y servicio excepcional.</p>
 				<p>¿Estás listo para vivir una estancia inolvidable?</p>
-				<a href="{% url 'alojamiento' %}"><button type="button" class="btn btn-primary btn-lg mt-3">Reserva tu Habitación Ahora</button></a>
+				<a href="{% url 'reservation' %}"><button type="button" class="btn btn-primary btn-lg mt-3">Reserva Sin Cuenta</button></a>
 			</div>
 		</section>
 		
@@ -161,11 +109,6 @@
 				
 				<article class="col-lg-6 col-xl-6 col-xxl-6 col-md-12 col-sm-12 p-5">
 					<h1 class="mb-4">
-						{% if request.user.is_authenticated %}
-							<p>Bienvenido, {{ request.user.username }}!</p>
-						{% else %}
-							<p>You are not logged in.</p>
-						{% endif %}
 						Explora la Serenidad en Fast Hotel: Un Refugio de Tranquilidad y Bienestar</h1>
 					<p>Adéntrate en el oasis de paz que es Fast Hotel, donde hemos creado un santuario dedicado al yoga y 
 						la tranquilidad. Descubre cómo nuestro hotel se ha convertido en un destino de primer nivel, ofreciendo una 
@@ -196,7 +139,7 @@
 						<li>Gastronomía Innovadora</li>
 						<li>Innovación en Experiencias</li>
 					</ul>
-					<a href="{% url 'services' %}"><button type="button" class="btn btn-primary btn-lg mt-3">Leer
+					<a href="{% url 'restaurant' %}"><button type="button" class="btn btn-primary btn-lg mt-3">Leer
 							más</button></a>
 				</article>
 
@@ -344,7 +287,7 @@
 								<div class="wrap-price">
 									<div class="price-innerdetail text-center">
 										<h2 class="display-3">Individual</h2>
-										<p class="prices">50$</p>
+										<p class="prices">7€ por día</p>
 										<div class="detail-pricing">
 											<span class="float-left"><i class="bi bi-check2-circle margin_top"></i>
 												Acceso a la habitación individual</span>
@@ -361,7 +304,7 @@
 								<div class="wrap-price center-wrap">
 									<div class="price-innerdetail text-center ">
 										<h2 class="display-3">Doble</h2>
-										<p class="prices">100$</p>
+										<p class="prices">14€ por día</p>
 										<div class="detail-pricing">
 											<span class="float-left"><i class="bi bi-check2-circle margin_top"></i>
 												Acceso a la habitación doble</span>
@@ -378,7 +321,7 @@
 								<div class="wrap-price">
 									<div class="price-innerdetail text-center">
 										<h2 class="display-3">Suite</h2>
-										<p class="prices">200$</p>
+										<p class="prices">28€ por día</p>
 										<div class="detail-pricing">
 											<span class="float-left"><i class="bi bi-check2-circle margin_top"></i>
 												Acceso a la suite</span>
@@ -399,6 +342,7 @@
 	</div>
 	
 	
+	
 
 	<div class="container">
 		<div class="row my-5">
@@ -408,116 +352,4 @@
 		</div>
 	</div>
 
-	<footer class="text-center text-lg-start text-white bg-dark">
-		<div class="container p-4 pb-0">
-			<section class="">
-				<div class="row">
-					<div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-						<h6 class="text-uppercase mb-4 font-weight-bold">
-							Fast Hotel
-						</h6>
-						<p>
-							Welcome to Fast Hotel, the premier destination for relaxation and comfort! Get ready to immerse yourself in a 
-							world of luxury and tranquility at our exceptional hotel.
-						</p>
-					</div>
-
-					<hr class="w-100 clearfix d-md-none" />
-
-					<div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-						<h6 class="text-uppercase mb-4 font-weight-bold">Performances</h6>
-						<p>
-							<a class="text-white" href="artist.html#brandy-section">Brandy</a>
-						</p>
-						<p>
-							<a class="text-white" href="artist.html#madoona-section">Madoona</a>
-						</p>
-						<p>
-							<a class="text-white" href="artist.html#glenn-danzig-section">Glenn</a>
-						</p>
-					</div>
-
-					<hr class="w-100 clearfix d-md-none" />
-
-					<div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
-						<h6 class="text-uppercase mb-4 font-weight-bold">
-							Festival Info
-						</h6>
-						<p>
-							<a class="text-white" href="form.html">Location</a><i class="bi bi-geo-alt-fill m-2"></i>
-						</p>
-						<p>
-							<a class="text-white" href="form.html">Form</a><i class="bi bi-ticket m-2"></i>
-						</p>
-						<p>
-							<a class="text-white" href="form.html">Reviews</a><i class="bi bi-chat-square-text m-2"></i>
-						</p>
-					</div>
-
-					<hr class="w-100 clearfix d-md-none" />
-
-					<div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-						<h6 class="text-uppercase mb-4 font-weight-bold">Information</h6>
-						<p>
-							Andorra la vella
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-								class="bi bi-geo-alt" viewBox="0 0 16 16">
-								<path
-									d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10" />
-								<path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-							</svg>
-						</p>
-						<p>
-							info@fasthotel.com
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-								class="bi bi-envelope" viewBox="0 0 16 16">
-								<path
-									d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
-							</svg>
-						</p>
-						<p>
-							+1 234 567 8901
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-								class="bi bi-phone" viewBox="0 0 16 16">
-								<path
-									d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-								<path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
-							</svg> </p>
-					</div>
-				</div>
-			</section>
-
-			<hr class="my-3">
-
-			<section class="p-3 pt-0">
-				<div class="row d-flex align-items-center">
-					<div class="col-md-7 col-lg-8 text-center text-md-start">
-						<div class="p-3">
-							© 2024 Fast Hotel lux hotel. All rights reserved.
-						</div>
-					</div>
-
-					<div class="col-md-5 col-lg-4 ml-lg-0 text-center text-md-end ">
-						<a class="btn btn-outline-light btn-floating m-1" href="#"><i class="fab fa-facebook-f"></i></a>
-						<a class="btn btn-outline-light btn-floating m-1" href="#"><i class="fab fa-twitter"></i></a>
-						<a class="btn btn-outline-light btn-floating m-1" href="#"><i class="fab fa-instagram"></i></a>
-						<a class="btn btn-outline-light btn-floating m-1" href="#"><i class="fab fa-youtube"></i></a>
-					</div>
-				</div>
-			</section>
-		</div>
-	</footer>
-
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-		
-	</script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-	integrity="sha384-Tx/xGuj0NLX0UiMj02LQzDqJgJ/fS2r3bOK9KMI5OGnlZxCSthAD2HByFihvA+67"
-	crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-		integrity="sha384-J50JSk/y7pT/Qm5rzJ+poFpFiaF7ltOHDeA7TxVgcvPQ9vAgFjc19p/NbZXMN3pK"
-		crossorigin="anonymous"></script>
-</body>
-
-</html>
+{% endblock %}
