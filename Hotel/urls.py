@@ -2,7 +2,7 @@ from django.urls import path
 from django.views.generic import TemplateView
 from .views import SignUp, CustomLoginView
 from . import views
-from .views import make_reservation, logout_view, make_anonymous_reservation, reservas
+from .views import make_reservation, logout_view, make_anonymous_reservation, reservas, booking_step, payment
 
 
 urlpatterns = [
@@ -17,6 +17,8 @@ urlpatterns = [
     path("restaurant/", TemplateView.as_view(template_name="hotel/restaurant.html"), name="restaurant"),
     path("services/", TemplateView.as_view(template_name="hotel/services.html"), name="services"),
     path("spa/", TemplateView.as_view(template_name="hotel/spa.html"), name="spa"),
+    path('bookingstep/', views.booking_step, name='booking_step'),
+    path('payment/<int:room_id>/', payment, name='payment'),
     path('signup/', SignUp.as_view(template_name="registration/signup.html"), name='signup'),
     path('login/', CustomLoginView.as_view(template_name="registration/login.html"), name='login'),
     path('logout/', logout_view, name='logout'),

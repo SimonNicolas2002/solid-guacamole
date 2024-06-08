@@ -4,6 +4,238 @@
 <link rel="stylesheet" href="{% static 'css/nav.css' %}">
 <link rel="stylesheet" href="{% static 'css/index.css' %}">
 <link rel="stylesheet" href="{% static 'css/index_header.css' %}">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<style>
+
+
+.section .section-center {
+	position: absolute;
+	top: 65%;
+	left: 0;
+	right: 0;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+#booking {
+	background: rgba(133, 104, 73, 0.33);
+}
+
+.booking-form {
+	position: relative;
+	max-width: 912px;
+	width: 100%;
+	margin: auto;
+	background: #ffffff;
+	border-radius: 6px;
+	-webkit-box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.1);
+}
+
+.booking-form .booking-bg {
+	position: absolute;
+	left: 25px;
+	top: -25px;
+	bottom: -25px;
+	width: 400px;
+	background-image: url('../img/paralax/hotel_room_2-wallpaper-3554x1999.jpg');
+	background-size: cover;
+	background-position: center;
+	padding: 25px;
+	border-radius: 6px;
+	-webkit-box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+}
+
+.booking-form .booking-bg::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	background: rgba(0, 0, 0, 0.229);
+	box-shadow: 10px 10px  black;
+}
+
+.booking-form>form {
+	margin-left: 425px;
+	padding: 30px;
+}
+
+.booking-form .form-header {
+	margin-bottom: 30px;
+	margin-top: 60px;
+	position: relative;
+	z-index: 20;
+}
+
+.booking-form .form-header h2 {
+	font-family: 'Playfair Display', serif;
+	margin-top: 0;
+	margin-bottom: 15px;
+	font-weight: 900;
+	color: #000000;
+	text-shadow: 3px 3px  3px rgb(196, 199, 220);
+	font-size: 42px;
+	text-transform: capitalize;
+}
+
+.booking-form .form-header p {
+	color: #000000;
+	font-size: 18px;
+	text-shadow: 3px 3px  3px rgb(196, 199, 220);
+
+}
+
+.booking-form .form-group {
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.booking-form .form-control {
+	background-color: #fff;
+	height: 45px;
+	padding: 0px 15px;
+	color: #151515;
+	border: 1px solid #e5e5e5;
+	font-size: 16px;
+	font-weight: 700;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border-radius: 40px;
+	-webkit-transition: 0.2s all;
+	transition: 0.2s all;
+}
+
+.booking-form .form-control::-webkit-input-placeholder {
+	color: #e5e5e5;
+}
+
+.booking-form .form-control:-ms-input-placeholder {
+	color: #e5e5e5;
+}
+
+.booking-form .form-control::placeholder {
+	color: #e5e5e5;
+}
+
+.booking-form .form-control:focus {
+	background: #f8f8f8;
+}
+
+.booking-form input[type="date"].form-control:invalid {
+	color: #e5e5e5;
+}
+
+.booking-form select.form-control {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+.booking-form select.form-control:invalid {
+	color: #e5e5e5;
+}
+
+.booking-form select.form-control option {
+	color: #151515;
+}
+
+.booking-form select.form-control+.select-arrow {
+	position: absolute;
+	right: 3px;
+	bottom: 5px;
+	width: 32px;
+	line-height: 32px;
+	height: 32px;
+	text-align: center;
+	pointer-events: none;
+	color: #e5e5e5;
+	font-size: 14px;
+}
+
+.booking-form select.form-control+.select-arrow:after {
+	content: '\279C';
+	display: block;
+	-webkit-transform: rotate(90deg);
+	transform: rotate(90deg);
+}
+
+.booking-form .form-label {
+	color: #000000;
+	text-transform: uppercase;
+	line-height: 24px;
+	height: 24px;
+	font-size: 14px;
+	font-weight: 400;
+	margin-left: 20px;
+}
+
+.booking-form .form-btn {
+	margin-top: 30px;
+}
+
+.booking-form .submit-btn {
+	display: block;
+	width: 100%;
+	color: #ffffff;
+	background-color: #0d6efd;
+	font-weight: 700;
+	font-size: 18px;
+	border: none;
+	border-radius: 40px;
+	height: 55px;
+	-webkit-transition: 0.2s all;
+	transition: 0.2s all;
+}
+
+.booking-form .submit-btn:hover,
+.booking-form .submit-btn:focus {
+	background-color: rgb(0, 0, 0);
+}
+
+@media only screen and (max-width: 768px) {
+	.booking-form .booking-bg {
+		position: relative;
+		background-color: rgba(255, 255, 255, 0);
+		left: 0;
+		right: 0;
+		top: -0px;
+		width: 95%;
+		margin: auto;
+		display: none;
+	}
+	.booking-form>form {
+		margin-left: 0px;
+	}
+
+	.booking-form {
+	position: relative;
+	max-width: 512px;
+	margin-top: 25px;
+	width: 100%;
+	margin: auto;
+	background: #ffffff;
+	border-radius: 6px;
+	-webkit-box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.1);
+}
+.sizebaby {
+	font-size: 40px;
+}
+
+.hide {
+	display: none;
+}
+}
+
+
+</style>
 {% endblock %}
 
 {% block content %}
@@ -12,53 +244,81 @@
 			<div class="parallax">
 
 			</div>
-			<div class="centered_text">Fast Hotel Andorra</div>
-			<div class="centered_form">
-				<form method="post" action="{% url 'index' %}">
-					{% csrf_token %}
-					<div class="form-group">
-						<label for="check_in_date">Check-in Date:</label>
-						<input type="date" class="form-control text-center" id="check_in_date" name="check_in_date" value="{{ check_in_date }}">
-						{% if form.errors.check_in_date %}
-							<p class="normal_text">{{ form.errors.check_in_date }}</p>
-						{% endif %}
+			<div class="centered_text sizebaby">Fast Hotel Andorra</div>
+			<div id="booking" class="section">
+				<div class="section-center">
+					<div class="container">
+						<div class="row">
+							<div class="booking-form">
+								<div class="booking-bg">
+									<div class="form-header">
+										<h2>¡Reserva tu estancia!</h2>
+										<p>Experimenta una hospitalidad excepcional en Fast Hotel Andorra. Sumérgete en momentos memorables de confort, lujo y servicio excepcional.</p>
+									</div>
+								</div>
+								<form action="{% url 'booking_step' %}" method="post">
+									{% csrf_token %}
+									<input type="hidden" name="form_source" value="index">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<span class="form-label">Check In</span>
+												<input class="form-control" id="check_in_date" name="check_in_date" type="date" required>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<span class="form-label">Check Out</span>
+												<input class="form-control" id="check_out_date" name="check_out_date" type="date" required>
+											</div>
+										</div>
+									</div>
+									{% if error_message %}
+									<div class="alert alert-danger">
+										{{ error_message }}
+									</div>
+									{% endif %}
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<span class="form-label">Adultos</span>
+												<select id="adults" name="adults" class="form-control">
+													<option>1</option>
+													<option>2</option>
+													<option>3</option>
+												</select>
+												<span class="select-arrow"></span>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<span class="form-label">Niños</span>
+												<select id="children" name="children" class="form-control">
+													<option>0</option>
+													<option>1</option>
+													<option>2</option>
+												</select>
+												<span class="select-arrow"></span>
+											</div>
+										</div>
+									</div>
+									<div class="form-btn">
+										<button type="submit" class="submit-btn">Ver disponibilidad</button>
+									</div>
+								</form>
+							</div>
+						</div>
 					</div>
-					<br/>
-					<div class="form-group">
-						<label for="check_out_date">Check-out Date:</label>
-						<input type="date" class="form-control text-center" id="check_out_date" name="check_out_date" value="{{ check_out_date }}">
-						{% if form.errors.check_out_date %}
-							<p class="text-danger">{{ form.errors.check_out_date }}</p>
-						{% endif %}
-					</div>
-					<br/>
-					<div class="form-group">
-						<label for="room">Rooms :</label>
-						<select class="form-control text-center" id="room" name="room">
-							{% for room in rooms %}
-								<option value="{{ room.room_number }}">Type: {{ room.category }} --- Room Number: {{ room.room_number }}</option>
-							{% endfor %}
-						</select>
-						{% if form.errors.room %}
-							<p class="text-danger">{{ form.errors.room }}</p>
-						{% endif %}
-					</div>
-					<br>
-					{% if form.non_field_errors %}
-						<p class="text-danger">{{ form.non_field_errors }}</p>
-					{% endif %}
-					<button type="submit" class="btn btn-primary">Make reservation</button>
-				</form>
+				</div>
 			</div>
 		</div>
-
+	
 	<div class="container mb-5">
 		<section class="row bg-dark text-light py-5 bottom_round mb-5 shadow-lg">
 			<div class="col-12 text-center">
-				<h1 class="display-3 mb-4">¡Descubre una Experiencia Única!</h1>
+				<h1 class="display-3 mb-4">Servicios de lujos!</h1>
 				<p>Sumérgete en una experiencia de hospitalidad sin igual. Únete a nosotros para disfrutar de momentos memorables de confort, lujo y servicio excepcional.</p>
 				<p>¿Estás listo para vivir una estancia inolvidable?</p>
-				<a href="{% url 'reservation' %}"><button type="button" class="btn btn-primary btn-lg mt-3">Reserva Sin Cuenta</button></a>
 			</div>
 		</section>
 		
@@ -92,16 +352,61 @@
 				<p class="justify-text">Encuentra tu paz interior y rejuvenece tu mente, cuerpo y espíritu con nuestras experiencias de bienestar y relajación. Desde sesiones de yoga al amanecer hasta tratamientos de spa indulgentes.</p>
 			</article>
 		</section>
-
+		
+		
 	</div>
 
 
 	<main class="container-fluid  blue">
+		<!-- 
+        <section class="row justify-content-center  bg-dark p-5">
+			<h1 class="pl-5 pr-5 pt-5 pb-3 text-center color swedish_change_me">Experiencias</h1>
+			<p class="mb-5 text-center swedish_change_me ">Disfrute de experiencias irrepetibles en sus vacaciones de la mano de Grand Plaza Hotel & Wellness.
 
-
+			</p>
+			<div class="row">
+				<div class="col-md-6 col-lg-3 mb-4">
+					<div class="card bg-dark text-white">
+						<img src="{% static 'img/experiencias/experience-wellness.jpg' %}" class="card-img" alt="Image 1">
+						<div class="card-img-overlay">
+							<h2 class="card-title">Spa & Wellness</h2>
+							<p class="card-text">Relax and rejuvenate with our spa treatments and wellness programs.</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-3 mb-4">
+					<div class="card bg-dark text-white">
+						<img src="{% static 'img/experiencias/experience-food.jpg' %}" class="card-img" alt="Image 2">
+						<div class="card-img-overlay">
+							<h2 class="card-title">Outdoor Adventures</h2>
+							<p class="card-text">Explore the breathtaking landscapes with our guided outdoor activities.</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-3 mb-4">
+					<div class="card bg-dark text-white">
+						<img src="{% static 'img/experiencias/experience-food.jpg' %}" class="card-img" alt="Image 3">
+						<div class="card-img-overlay">
+							<h2 class="card-title">Fine Dining</h2>
+							<p class="card-text">Indulge in exquisite culinary experiences at our fine dining restaurants.</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-3 mb-4">
+					<div class="card bg-dark text-white">
+						<img src="{% static 'img/experiencias/experience-food.jpg' %}" class="card-img" alt="Image 4">
+						<div class="card-img-overlay">
+							<h2 class="card-title">Concierge Services</h2>
+							<p class="card-text">Let our concierge team assist you in planning your perfect stay.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+-->
 		<section class="row my-5">
 		</section>
-
+ 
 
 		<div class="container">
 
@@ -160,7 +465,7 @@
 
 	
 	
-	<aside class="special borde bg-dark">
+	<aside class="special borde bg-dark hide">
 		<div class="container">
 			<div class="row my-5">
 				<div class="col-12">
@@ -184,7 +489,7 @@
 										<div class="image">
 											<img src="{% static 'img/suits/biolc-deluxe-guestroom-6547-hor-clsc.png' %}">
 										</div>
-										<h3 class="m-0">Single Room</h3>
+										<h3 class="m-0">Single</h3>
 										<div class="content">
 											<p>Disfruta de la comodidad y elegancia de nuestra habitación individual. Perfecta para aquellos que buscan privacidad y confort durante su estancia en Fast Hotel.</p>
 											<a href="artist.html#brandy-section">
@@ -204,7 +509,7 @@
 											<img src="{% static 'img/suits/biolc-premium-sparoom-8961-hor-clsc.png' %}">
 										</div>
 										<div class="title">
-											<h3 class="m-0">Suite</h3>
+											<h3 class="m-0">Double</h3>
 										</div>
 										<div class="content">
 											<p>Sumérgete en el lujo y la exclusividad de nuestras suites. Diseñadas para ofrecerte una experiencia inolvidable, nuestras suites son el lugar perfecto para relajarte y recargar energías.</p>
@@ -224,7 +529,7 @@
 											<img href="#" src="{% static 'img/suits/biolc-premium-sparoom-8964-hor-clsc.png' %}">
 										</div>
 										<div class="title">
-											<h3 class="m-0">Junior Suite</h3>
+											<h3 class="m-0">Suite</h3>
 										</div>
 										<div class="content">
 											<p>Experimenta el lujo y la amplitud de nuestras suites junior. Con un diseño moderno y todas las comodidades que puedas desear, nuestras junior suites son el refugio perfecto.</p>
@@ -286,8 +591,8 @@
 							<div class="col-lg-4 pb-5 pb-lg-0">
 								<div class="wrap-price">
 									<div class="price-innerdetail text-center">
-										<h2 class="display-3">Individual</h2>
-										<p class="prices">7€ por día</p>
+										<h2 class="display-3">Single</h2>
+										<p class="prices">50€ por día</p>
 										<div class="detail-pricing">
 											<span class="float-left"><i class="bi bi-check2-circle margin_top"></i>
 												Acceso a la habitación individual</span>
@@ -296,15 +601,15 @@
 											<span class="float-left"><i class="bi bi-check2-circle margin_top"></i>
 												Servicio de atención al cliente básico</span>
 										</div>
-										<a href="#" class="btn btn-secondary mt-5">Reservar ahora</a>
+										<a href="{% url 'booking_step' %}" class="btn btn-secondary mt-5">Reservar ahora</a>
 									</div>
 								</div>
 							</div>
 							<div class="col-lg-4 pb-5 pb-lg-0">
 								<div class="wrap-price center-wrap">
 									<div class="price-innerdetail text-center ">
-										<h2 class="display-3">Doble</h2>
-										<p class="prices">14€ por día</p>
+										<h2 class="display-3">Double</h2>
+										<p class="prices">90€ por día</p>
 										<div class="detail-pricing">
 											<span class="float-left"><i class="bi bi-check2-circle margin_top"></i>
 												Acceso a la habitación doble</span>
@@ -313,7 +618,7 @@
 											<span class="float-left"><i class="bi bi-check2-circle margin_top"></i>
 												Servicio de atención al cliente básico</span>
 										</div>
-										<a href="#" class="btn btn-secondary mt-5">Reservar ahora</a>
+										<a href="{% url 'booking_step' %}" class="btn btn-secondary mt-5">Reservar ahora</a>
 									</div>
 								</div>
 							</div>
@@ -321,7 +626,7 @@
 								<div class="wrap-price">
 									<div class="price-innerdetail text-center">
 										<h2 class="display-3">Suite</h2>
-										<p class="prices">28€ por día</p>
+										<p class="prices">140€ por día</p>
 										<div class="detail-pricing">
 											<span class="float-left"><i class="bi bi-check2-circle margin_top"></i>
 												Acceso a la suite</span>
@@ -330,7 +635,7 @@
 											<span class="float-left"><i class="bi bi-check2-circle margin_top"></i>
 												Servicio de atención al cliente premium</span>
 										</div>
-										<a href="#" class="btn btn-secondary mt-5">Reservar ahora</a>
+										<a href="{% url 'booking_step' %}" class="btn btn-secondary mt-5">Reservar ahora</a>
 									</div>
 								</div>
 							</div>
@@ -341,9 +646,6 @@
 		</div>
 	</div>
 	
-	
-	
-
 	<div class="container">
 		<div class="row my-5">
 			<div class="col-12">
@@ -351,5 +653,47 @@
 			</div>
 		</div>
 	</div>
+	<script>
+		$(function() {
+		$('input[name="daterange"]').daterangepicker({
+			opens: 'left',
+			minDate: moment(), // Set the minimum date to today
+			startDate: moment() // Set the initial date selection to today
+		}, function(start, end, label) {
+			console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+		});
+		});
+
+		$(function() {
+		$('input[name="daterange"]').daterangepicker({
+			opens: 'left',
+			minDate: moment(), 
+			startDate: moment() 
+		}, function(start, end, label) {
+			console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+		});
+		});
+
+		function increment(id) {
+			let input = document.getElementById(id);
+			input.value = parseInt(input.value) + 1;
+		}
+
+		function decrement(id) {
+			let input = document.getElementById(id);
+			if (input.value > 0) {
+				input.value = parseInt(input.value) - 1;
+			}
+		}
+
+		document.addEventListener('DOMContentLoaded', function() {
+			var today = new Date().toISOString().split('T')[0];
+			document.getElementById('check_in_date').setAttribute('min', today);
+			document.getElementById('check_out_date').setAttribute('min', today);
+
+		});
+
+
+</script>
 
 {% endblock %}

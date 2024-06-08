@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/nav.css' %}">
+<link rel="stylesheet" href="{% static 'css/footer.css' %}">
+<!-- Include Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- Custom CSS -->
+<style>
+    .room-card {
+        margin-bottom: 20px;
+    }
+    .room-image {
+        max-width: 100%;
+        height: auto;
+    }
+    .img_room {
+        max-width: 50%;
+        height: auto;
+    }
+    body {
+    background-color: rgb(244, 248, 253);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <form action="{% url 'booking_step' %}" method="post" class="mt-5">
+                {% csrf_token %}
+                <input type="hidden" name="form_source" value="bookingstep">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="check_in_date">Check In</label>
+                            <input class="form-control" id="check_in_date" name="check_in_date" type="date" value="{{ check_in_date|default_if_none:'' }}" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="check_out_date">Check Out</label>
+                            <input class="form-control" id="check_out_date" name="check_out_date" type="date" value="{{ check_out_date|default_if_none:'' }}" required>
+                        </div>
+                    </div>
+                </div>
+                {% if error_message %}
+                <div class="alert alert-danger">
+                    {{ error_message }}
+                </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="adults">Adultos</label>
+                            <select id="adults" name="adults" class="form-control">
+                                <option {% if adults == '1' %}selected{% endif %}>1</option>
+                                <option {% if adults == '2' %}selected{% endif %}>2</option>
+                                <option {% if adults == '3' %}selected{% endif %}>3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="children">Niños</label>
+                            <select id="children" name="children" class="form-control">
+                                <option {% if children == '0' %}selected{% endif %}>0</option>
+                                <option {% if children == '1' %}selected{% endif %}>1</option>
+                                <option {% if children == '2' %}selected{% endif %}>2</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Ver disponibilidad</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Filter by Room Category</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="room_category">Select Room Category:</label>
+                <select id="room_category" class="form-control">
+                    <option value="">All</option>
+                    {% for category in categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <button onclick="filterRooms()" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-5">
+    <h1 class="mb-4">Habitaciones Disponibles</h1>
+    <div class="row">
+        {% if available_rooms %}
+            {% for room in available_rooms %}
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                    <div class="card h-100 shadow">
+                        {% if room.image %}
+                            <img src="{{ room.image.url }}" class="card-img-top"  alt="Room Image">
+                        {% else %}
+                        <div class="text-center text-muted mt-3 mb-3 d-flex justify-content-center align-items-center" style="min-width: 200px;  min-height: 200px; max-height: 200px;">
+                            No image available
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ room.get_category_display }}</h5>
+                            <p class="card-text">Room Number: {{ room.room_number }}</p>
+                            <p class="card-text">State: {{ room.get_state_display }}</p>
+                            <p class="card-text">Description: {{ room.description }}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Rent: {{ room.rent }} € <i class="bi bi-cash-stack"></i>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Adults: {{ room.adults }} <i class="bi bi-person"></i>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Children: {{ room.children }}<i class="fa-solid fa-child"></i>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Disability Access: {% if room.discapacity %}Yes{% else %}No{% endif %} <i class="bi bi-shield-shaded"></i>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                WiFi: {% if room.wifi %}Yes{% else %}No{% endif %} <i class="bi bi-wifi"></i>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Television: {% if room.television %}Yes{% else %}No{% endif %} <i class="bi bi-telephone"></i>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Phone: {% if room.phone %}Yes{% else %}No{% endif %} <i class="bi bi-phone"></i>
+                            </li>
+                        </ul>
+                        <div class="card-footer text-center">
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'payment' room.id %}" onclick="createReservationCookie('{{ room.rent }}')" class="btn btn-primary">Reservar</a>
+                            {% else %}
+                                <p class="text-muted">Por favor, <a href="{% url 'login' %}">inicia sesión</a> para reservar esta habitación.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12 p-5">
+                <p>No hay habitaciones disponibles para las fechas seleccionadas.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!--
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                    <li class="page-item {% if num == page_obj.number %}active{% endif %}">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+-->
+<script>
+   function createReservationCookie(rent) {
+    var checkInDate = document.getElementById('check_in_date').value;
+    var checkOutDate = document.getElementById('check_out_date').value;
+    var adults = document.getElementById('adults').value;
+    var children = document.getElementById('children').value;
+
+    var reservationData = {
+        "check_in_date": checkInDate,
+        "check_out_date": checkOutDate,
+        "adults": adults,
+        "children": children,
+        "rent": rent 
+    };
+
+    var jsonString = JSON.stringify(reservationData);
+
+    // Adjust the cookie path as needed
+    document.cookie = "reservation_data=" + jsonString + "; path=/"; 
+    console.log('Cookie created:', jsonString);
+}
+
+function filterRooms() {
+    var selectedCategory = document.getElementById('room_category').value;
+    var rooms = document.querySelectorAll('.col-lg-4.col-md-6.col-sm-12.mb-4');
+
+    rooms.forEach(function(room) {
+        var category = room.querySelector('.card-title').textContent.trim();
+        if (selectedCategory === '' || category === selectedCategory) {
+            room.style.display = 'block';
+        } else {
+            room.style.display = 'none';
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+			var today = new Date().toISOString().split('T')[0];
+			document.getElementById('check_in_date').setAttribute('min', today);
+			document.getElementById('check_out_date').setAttribute('min', today);
+
+		});
+
+</script>
+{% endblock %}
