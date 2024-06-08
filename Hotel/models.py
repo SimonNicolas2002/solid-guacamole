@@ -1,4 +1,5 @@
 import phonenumbers
+from django.core.validators import MaxValueValidator
 from django.contrib.auth.models import AbstractUser
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -8,8 +9,21 @@ from django.urls import reverse
 
 
 class CustomUser(AbstractUser):
+    """
+    Modelo personalizado de usuario.
+    """
+
+    DOCUMENT_TYPES = [
+        ('PASSPORT', 'Passport'),
+        ('NIE', 'NIE'),
+        ('DNI', 'DNI'),
+    ]
+
     guest_id = models.AutoField(primary_key=True)
-    nationality = CountryField()
+    document_type = models.CharField(max_length=20, choices=DOCUMENT_TYPES, default='PASSPORT')
+    document = models.CharField(max_length=9)
+    email = models.EmailField()
+    nationality = CountryField(default='Spain')
     gender = models.CharField(max_length=10)
     phone_number = models.CharField(max_length=20)
 
@@ -28,47 +42,66 @@ class CustomUser(AbstractUser):
 
 
 class Hotel(models.Model):
+    """
+    Modelo para representar un hotel.
+    """
     hotel_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    location = models.CharField(max_length=255)
+    direction = models.CharField(max_length=255)
+    CountryField = CountryField(default='Spain')
+    city = models.CharField(max_length=50)
+    post_code = models.IntegerField()
+    phonenumber = models.IntegerField()
     num_rooms = models.IntegerField(default=0)
-    contact_info = models.CharField(max_length=20)
+    email = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name
 
 
 class Room(models.Model):
+    """
+    Modelo para representar una habitación de hotel.
+    """
     ROOM_CATEGORIES = [
-        ('SUITE', 'Suite'),
-        ('STUDIO', 'Studio'),
-        ('CONNECTING', 'Connecting rooms'),
-        ('SINGLE', 'Single room'),
-        ('JUNIOR_SUITE', 'Junior Suite'),
-        ('DELUXE', 'Deluxe Room'),
-        ('DOUBLE', 'Double room'),
-        ('PRESIDENTIAL', 'Presidential Suites'),
-        ('TRIPLE', 'Triple room'),
+        ('Single', 'Single'),
+        ('Suite', 'Suite'),
+        ('Double', 'Double'),
+    ]
+
+    ESTADO = [
+        ("Ocupado", "Ocupado"),
+        ("Libre/Disponible", "Libre/Disponible"),
+        ("Reservado", "Reservado"),
+        ("Sucio/En Limpieza", "Sucio/En Limpieza"),
+        ("En Mantenimiento/Reparaciones", "En Mantenimiento/Reparaciones"),
+        ("Bloqueado", "Bloqueado"),
+        ("Fuera de Servicio", "Fuera de Servicio"),
+        ("Inhabitable/No disponible", "Inhabitable/No disponible")
     ]
 
     ROOM_DESCRIPTIONS = {
-        'SUITE': 'Big room with two beds and luxurious amenities',
-        'STUDIO': 'Spacious room with a sitting area and workspace',
-        'CONNECTING': 'Two rooms with an interconnecting door',
-        'SINGLE': 'Cozy room with a single bed',
-        'JUNIOR_SUITE': 'Room with a separate seating area',
-        'DELUXE': 'High-end room with premium amenities',
-        'DOUBLE': 'Room with a double bed',
-        'PRESIDENTIAL': 'Luxurious and spacious suite',
-        'TRIPLE': 'Room with three beds'
+        'Single': 'Single room with one bed and a private bathroom',
+        'Double': 'Double room with two beds and a private bathroom',
+        'Suite': 'Suite with two rooms, an interconnecting door, and a private bathroom',
     }
 
-    room_number = models.IntegerField(unique=True)
+    room_number = models.CharField(max_length=3)
+    image = models.ImageField(upload_to='room_images/', blank=True, null=True)
     category = models.CharField(max_length=50, choices=ROOM_CATEGORIES)
+    state = models.CharField(max_length=50, choices=ESTADO)
     rent = models.DecimalField(max_digits=10, decimal_places=2)
+    adults = models.IntegerField(validators=[MaxValueValidator(3)])
+    children = models.IntegerField(validators=[MaxValueValidator(3)])
     occupied = models.BooleanField(default=False)
-    hotel = models.ForeignKey(Hotel, related_name='rooms', on_delete=models.CASCADE)
+    discapacity = models.BooleanField(default=False)
+    wifi = models.BooleanField(default=False)
+    television = models.BooleanField(default=False)
+    phone = models.BooleanField(default=False)
     description = models.TextField(blank=True, default="")
+    hotel = models.ForeignKey(Hotel, related_name='rooms', on_delete=models.CASCADE)
+    num_toilets = models.IntegerField(default=0)
+    num_beds = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         self.description = self.ROOM_DESCRIPTIONS.get(self.category, 'No description available')
@@ -90,6 +123,9 @@ class Room(models.Model):
 
 
 class Reservation(models.Model):
+    """
+    Modelo para representar una reserva de habitación de hotel.
+    """
     RESERVATION_STATUS = [
         ('PENDING', 'Pending'),
         ('CONFIRMED', 'Confirmed'),
@@ -97,14 +133,17 @@ class Reservation(models.Model):
         ('COMPLETED', 'Completed')
     ]
 
-    guest = models.ForeignKey(CustomUser, related_name='reservations', on_delete=models.CASCADE, blank=True, null=True)
-    hotel = models.ForeignKey('Hotel', related_name='reservations', on_delete=models.CASCADE)
-    room = models.ForeignKey('Room', related_name='reservation', on_delete=models.CASCADE)
     name = models.CharField(max_length=100, blank=True, null=True)
     surname = models.CharField(max_length=100, blank=True, null=True)
+    adults = models.IntegerField(validators=[MaxValueValidator(3)])
+    children = models.IntegerField(validators=[MaxValueValidator(3)])
     check_in_date = models.DateField()
     check_out_date = models.DateField()
     status = models.CharField(max_length=20, choices=RESERVATION_STATUS)
+    guest = models.ForeignKey(CustomUser, related_name='reservations', on_delete=models.CASCADE, blank=True, null=True)
+    hotel = models.ForeignKey('Hotel', related_name='reservations', on_delete=models.CASCADE)
+    room = models.ForeignKey('Room', related_name='reservation', on_delete=models.CASCADE)
+    payment_method = models.ForeignKey('Metodo_pago', related_name='reservation', on_delete=models.CASCADE)
 
     def clean(self):
         print(self.guest)
@@ -126,3 +165,20 @@ class Reservation(models.Model):
 
     def __str__(self):
         return f"Reservation id {self.pk} - Room id/number {self.room.id} - hotel name - {self.hotel.name}"
+
+
+class Metodo_pago(models.Model):
+    """
+    Modelo para representar los métodos de pago disponibles.
+    """
+    PAYMENT_OPTIONS = [
+        ('PAYPAL', 'paypal'),
+        ('TARJETA BANCARIA', 'Tarjeta Bancaria'),
+        ('EFECTIVO', 'Efectivo')     
+    ]
+
+    payment_type = models.CharField(max_length=50, choices=PAYMENT_OPTIONS)
+    descripcion = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.payment_type
