@@ -45,7 +45,6 @@ class CustomLoginView(LoginView):
 logger = logging.getLogger(__name__)
 
 
-@login_required
 def make_reservation(request):
     try:
         if request.method == 'POST':
@@ -88,7 +87,6 @@ def make_reservation(request):
         return redirect('login')
 
 
-@login_required
 def reservas(request):
     try:
         if request.method == 'POST':
@@ -225,7 +223,6 @@ def payment(request, room_id):
     return render(request, 'hotel/payment.html', context)
 
 
-@login_required
 def cancel_reservation(request, reservation_id):
     reservation = get_object_or_404(Reservation, pk=reservation_id)
     
