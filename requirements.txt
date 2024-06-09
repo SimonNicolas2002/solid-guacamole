@@ -1,0 +1,6 @@
+Django==5.0.4
+django-countries==7.6.1
+mypy==1.9.0
+phonenumbers==8.13.36
+pillow==10.3.0
+pipdeptree==2.22.0

@@ -9,7 +9,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = UserCreationForm.Meta.fields + ('username', 'email', 'document', 'first_name', 'surname', 'phone_number', 'nationality', 'gender')
+        fields = UserCreationForm.Meta.fields + ('username', 'email', 'first_name', 'surname', 'document_type','document',  'phone_number', 'nationality', 'gender')
 
     
 class CustomAuthenticationForm(AuthenticationForm):
@@ -20,13 +20,4 @@ class CustomAuthenticationForm(AuthenticationForm):
 class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
-        fields = ['check_in_date', 'check_out_date', 'room']
-
-
-class AnonymousReservationForm(forms.ModelForm):
-    class Meta:
-        model = Reservation
-        fields = ['check_in_date', 'check_out_date', 'room', 'name', 'surname']
-
-    name = forms.CharField(required=True)
-    surname = forms.CharField(required=True)
+        fields = ['name', 'surname', 'adults', 'children', 'check_in_date', 'check_out_date', 'room', 'hotel', 'payment_method']

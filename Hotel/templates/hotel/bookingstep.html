@@ -2,11 +2,10 @@
 {% load static %}
 
 {% block css %}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="{% static 'css/nav.css' %}">
 <link rel="stylesheet" href="{% static 'css/footer.css' %}">
-<!-- Include Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<!-- Custom CSS -->
 <style>
     .room-card {
         margin-bottom: 20px;
@@ -20,8 +19,8 @@
         height: auto;
     }
     body {
-    background-color: rgb(244, 248, 253);
-}
+        background-color: rgb(244, 248, 253);
+    }
 </style>
 {% endblock %}
 
@@ -83,7 +82,7 @@
 </div>
 
 <div class="container mt-5">
-    <h1 class="mb-4">Filter by Room Category</h1>
+    <h1 class="mb-4">Filtrar por categoría</h1>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -152,9 +151,9 @@
                             {% else %}
                                 <p class="text-muted">Por favor, <a href="{% url 'login' %}">inicia sesión</a> para reservar esta habitación.</p>
                             {% endif %}
-                        </div>
-                    </div>
-                </div>
+                        </div> <br>
+                    </div> 
+                </div> 
             {% endfor %}
         {% else %}
             <div class="col-12 p-5">
@@ -206,7 +205,6 @@
 
     var jsonString = JSON.stringify(reservationData);
 
-    // Adjust the cookie path as needed
     document.cookie = "reservation_data=" + jsonString + "; path=/"; 
     console.log('Cookie created:', jsonString);
 }

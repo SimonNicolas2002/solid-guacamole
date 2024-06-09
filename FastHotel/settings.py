@@ -36,6 +36,7 @@ LOGIN_URL = 'login'
 INSTALLED_APPS = [
     'Hotel.apps.HotelConfig',
     'django.contrib.admin',
+    'django.contrib.humanize',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

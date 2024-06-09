@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block head %}
 
+    <link rel="stylesheet" href="{% static 'css/service_detail.css' %}">
+
+{% endblock %}
 {% block content %}
-<main class="container p-5 white my-5 shadow-lg">
+<main class="container p-5 my-5 shadow-lg">
     <section class="row text-center">
         <article class="col-12">
             <h1 class="mb-5">Baños y relajación</h1> 
@@ -11,11 +15,9 @@
         </article>
         <article class="col-12 my-5">
 
-
         </article>
         <article class="col-12 text-start p-5 bg-dark text-light">
             <h2>Descripción</h2>
-            <hr>
             <p>
                 En nuestro spa, te invitamos a sumergirte en un oasis de relajación y revitalización donde podrás experimentar una variedad de baños terapéuticos diseñados para calmar el cuerpo y la mente.
             </p>
@@ -28,7 +30,6 @@
         </article>
         <article class="col-12 text-start p-5 border shadow-lg mt-5">
             <h2>Tipos de Baños</h2>
-            <hr>
             <p>
                 Los baños de aromaterapia y hierbas consisten en añadir aceites esenciales y/o hierbas al agua del baño. Mientras te bañas, inhalas los aromas de lo que se ha añadido y dejas que el agua tibia alivie tus dolores y molestias.
             </p>

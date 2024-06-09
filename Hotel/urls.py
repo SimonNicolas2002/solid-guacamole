@@ -2,15 +2,15 @@ from django.urls import path
 from django.views.generic import TemplateView
 from .views import SignUp, CustomLoginView
 from . import views
-from .views import make_reservation, logout_view, make_anonymous_reservation, reservas, booking_step, payment
+from .views import make_reservation, logout_view, reservas, booking_step, payment, cancel_reservation
 
 
 urlpatterns = [
     path("", make_reservation, name="index"),
-    path("reservation/", make_anonymous_reservation, name="reservation"),
     path("reservaitons/", reservas, name="reservations"),
-    path('reservation_success/', TemplateView.as_view(template_name="hotel/reservation_success.html"), name='reservation_success'),
+    path('card_payment/', TemplateView.as_view(template_name="hotel/card_payment.html"), name='card_payment'),
     path("alojamiento/", TemplateView.as_view(template_name="hotel/alojamiento.html"), name="alojamiento"),
+    path('cancel-reservation/<int:reservation_id>/', cancel_reservation, name='cancel_reservation'),
     path("artist/", TemplateView.as_view(template_name="hotel/artist.html"), name="artist"),
     path("events_reunion/", TemplateView.as_view(template_name="hotel/events_reunion.html"), name="events_reunion"),
     path("form/", TemplateView.as_view(template_name="hotel/form.html"), name="form"),
