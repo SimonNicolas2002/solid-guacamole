@@ -22,6 +22,7 @@ from django.http import HttpResponseNotFound
 from django.template import TemplateDoesNotExist
 from django.core.paginator import Paginator
 from django.http import HttpResponseForbidden, HttpResponseNotAllowed
+from django.contrib.auth.decorators import login_required
 
 
 def logout_view(request):
@@ -44,9 +45,7 @@ class CustomLoginView(LoginView):
 logger = logging.getLogger(__name__)
 
 
-from django.contrib.auth.decorators import login_required
-
-
+@login_required
 def make_reservation(request):
     try:
         if request.method == 'POST':
@@ -226,6 +225,7 @@ def payment(request, room_id):
     return render(request, 'hotel/payment.html', context)
 
 
+@login_required
 def cancel_reservation(request, reservation_id):
     reservation = get_object_or_404(Reservation, pk=reservation_id)
     

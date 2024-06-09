@@ -205,7 +205,6 @@
 
     var jsonString = JSON.stringify(reservationData);
 
-    // Adjust the cookie path as needed
     document.cookie = "reservation_data=" + jsonString + "; path=/"; 
     console.log('Cookie created:', jsonString);
 }
