@@ -40,18 +40,18 @@
                         <p class="text-muted mb-3">No image available</p>
                     </div>
                     {% endif %}
-                    <p class="card-text mb-1">Name: {{ reservation.name }}</p>
-                    <p class="card-text mb-1">Surname: {{ reservation.surname }}</p>
-                    <p class="card-text mb-1" id="check_in_date">Check-in Date: {{ reservation.check_in_date }}</p>
-                    <p class="card-text mb-1" id="check_out_date">Check-out Date: {{ reservation.check_out_date }}</p>
-                    <p class="card-text mb-1">Status: {{ reservation.status }}</p>
-                    <p class="card-text mb-1">Room number: {{ reservation.room.room_number }}</p>
-                    <p class="card-text mb-1">State: {{ reservation.room.state }}</p>
-                    <p class="card-text mb-1">Children: {{ reservation.room.children }}</p>
-                    <p class="card-text mb-1">Adults: {{ reservation.room.adults }}</p>
-                    <p class="card-text mb-1">Rent night: {{ reservation.room.rent|floatformat:2 }} €</p><br>
-					<p class="card-text mb-1" id="rent" style="display: none;">{{ reservation.room.rent|floatformat:2 }}</p><br>
-					<h6 class="card-text mb-1" id="total">Total + IVA:  </h6><br>
+                    <p class="card-text mb-1 p-2" style="background-color: rgb(239, 239, 239);">Name: {{ reservation.name }}</p>
+                    <p class="card-text mb-1 p-2">Surname: {{ reservation.surname }}</p>
+                    <p class="card-text mb-1 p-2" style="background-color: rgb(239, 239, 239);" id="check_in_date">Check-in Date: {{ reservation.check_in_date }}</p>
+                    <p class="card-text mb-1 p-2"  id="check_out_date">Check-out Date: {{ reservation.check_out_date }}</p>
+                    <p class="card-text mb-1 p-2"  style="background-color: rgb(239, 239, 239);">Status: {{ reservation.status }}</p>
+                    <p class="card-text mb-1 p-2" >Room number: {{ reservation.room.room_number }}</p>
+                    <p class="card-text mb-1 p-2"  style="background-color: rgb(239, 239, 239);">State: {{ reservation.room.state }}</p>
+                    <p class="card-text mb-1 p-2" >Children: {{ reservation.room.children }}</p>
+                    <p class="card-text mb-1 p-2"  style="background-color: rgb(239, 239, 239);">Adults: {{ reservation.room.adults }}</p>
+                    <p class="card-text mb-1 p-2" >Rent night: {{ reservation.room.rent|floatformat:2 }} €</p><br>
+					<p class="card-text mb-1 p-2"  id="rent" style="display: none;">{{ reservation.room.rent|floatformat:2 }}</p><br>
+					<h6 class="card-text mb-1 p-2"  id="total">Total + IVA:  </h6><br>
 
 					<button type="submit" class="btn btn-danger mt-auto">Cancel</a>
 
@@ -87,16 +87,16 @@
                         <p class="text-muted mb-3">No image available</p>
                     </div>
                     {% endif %}
-                    <p class="card-text mb-1">Name: {{ reservation.name }}</p>
-                    <p class="card-text mb-1">Surname: {{ reservation.surname }}</p>
-                    <p class="card-text mb-1">Check-in Date: {{ reservation.check_in_date }}</p>
-                    <p class="card-text mb-1">Check-out Date: {{ reservation.check_out_date }}</p>
-                    <p class="card-text mb-1">Status: {{ reservation.status }}</p>
-                    <p class="card-text mb-1">Room number: {{ reservation.room.room_number }}</p>
-                    <p class="card-text mb-1">State: {{ reservation.room.state }}</p>
-                    <p class="card-text mb-1">Children: {{ reservation.room.children }}</p>
-                    <p class="card-text mb-1">Adults: {{ reservation.room.adults }}</p>
-                    <p class="card-text mb-1">Rent: {{ reservation.room.rent|floatformat:2 }} €</p><br>
+                    <p class="card-text mb-1 p-2" style="background-color: rgb(239, 239, 239);">Name: {{ reservation.name }}</p>
+                    <p class="card-text mb-1   p-2">Surname: {{ reservation.surname }}</p>
+                    <p class="card-text mb-1  p-2"  style="background-color: rgb(239, 239, 239);">Check-in Date: {{ reservation.check_in_date }}</p>
+                    <p class="card-text mb-1  p-2">Check-out Date: {{ reservation.check_out_date }}</p>
+                    <p class="card-text mb-1  p-2"  style="background-color: rgb(239, 239, 239);">Status: {{ reservation.status }}</p>
+                    <p class="card-text mb-1  p-2">Room number: {{ reservation.room.room_number }}</p>
+                    <p class="card-text mb-1  p-2"  style="background-color: rgb(239, 239, 239);">State: {{ reservation.room.state }}</p>
+                    <p class="card-text mb-1  p-2">Children: {{ reservation.room.children }}</p>
+                    <p class="card-text mb-1 p-2"  style="background-color: rgb(239, 239, 239);">Adults: {{ reservation.room.adults }}</p>
+                    <p class="card-text mb-1  p-2" >Rent: {{ reservation.room.rent|floatformat:2 }} €</p><br>
                 </div>
             </div>
         </div>
