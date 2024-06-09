@@ -1,255 +1,355 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/nav.css' %}">
-    <style>
-       .form-group label {
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        .space {
-          margin-right: 40px;
-        }
-        .date {
-          font-size: larger;
-        }
+<link rel="stylesheet" type="text/css" href="{% static 'css/nav.css' %}">
+<style>
+    .form-group label {
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
 
-        #datePriceBox {
-          max-height: 200px;
-          overflow-y: auto;
-          border: 1px solid #ccc; 
-          padding: 10px; 
-        }
+    .space {
+        margin-right: 40px;
+    }
 
-        .even {
-            background-color: #f5f5f5; 
-        }
+    .date {
+        font-size: larger;
+    }
 
-        .price-item {
-            padding: 5px; 
-        }
+    #datePriceBox {
+        max-height: 200px;
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
 
-        .thumbnail {
-            max-width: 140px; 
-            margin-bottom: 10px; 
-            min-width: 100px;
-        }
-        .img-thumbnail {
-            max-width: 100%; 
-            min-width: 100%;
-            height: auto; 
-        }
-        .other-information {
-          
-        }
-        body {
-            background-color: rgb(244, 248, 253);
-        }
-    </style>
+    .even {
+        background-color: #f5f5f5;
+    }
+
+    .price-item {
+        padding: 5px;
+    }
+
+    .thumbnail {
+        max-width: 140px;
+        margin-bottom: 10px;
+        min-width: 100px;
+    }
+
+    .img-thumbnail {
+        max-width: 100%;
+        min-width: 100%;
+        height: auto;
+    }
+
+    .other-information {}
+
+    body {
+        background-color: rgb(244, 248, 253);
+    }
+</style>
 {% endblock %}
+
 {% block content %}
 <div class="container p-5">
-  <div class="row">
-      <div class="col-lx-5 col-lg-5 m-3 col-md-12 col-sm-12 col-xs-12">
-          <p>Datos personales - paso 2 de 2</p>
-          <h2>Datos de reserva</h2>
-          <p>Todos los datos son obligatorios a no ser que indicen lo contrario</p>
-          <form>
+    <div class="row">
+        <div class="col-lx-5 col-lg-5 m-3 col-md-12 col-sm-12 col-xs-12">
+            <p>Datos personales - paso 2 de 2</p>
+            <h2>Datos de reserva</h2>
+            <p>Todos los datos son obligatorios a no ser que indicen lo contrario</p>
+            <form action="{% url 'reservations' %}" method="post"> 
+              {% csrf_token %}
+              <input type="hidden" name="adults" value="">
+              <input type="hidden" name="children" value="">
+              <input type="hidden" name="check_in_date" id="check_in_date_input" value="">
+              <input type="hidden" name="check_out_date" id="check_out_date_input" value="">
+              <input type="hidden" name="room_id" value="{{ room_id }}">
               <div class="form-group">
-                  <input type="text" class="form-control" id="nombre" placeholder="Nombre" required>
+                  <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre" required>
               </div> </br>
               <div class="form-group">
-                  <input type="text" class="form-control" id="apellido" placeholder="Apellido" required>
+                  <input type="text" class="form-control" name="apellido" id="apellido" placeholder="Apellido" required>
               </div> </br>
               <div class="form-group">
-                  <input type="email" class="form-control" id="email" placeholder="Correo Electrónico" required>
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Correo Electrónico" required>
               </div> </br>
               <div class="form-group">
-                  <input type="tel" class="form-control" id="telefono" placeholder="Teléfono" required>
+                  <input type="tel" class="form-control" name="telefono" id="telefono" placeholder="Teléfono" required>
               </div> </br>
               <div class="form-group">
-                  <input type="text" class="form-control" id="empresa" placeholder="Empresa (optional)">
-              </div> </br>
-              <div class="form-group border bg-light solid p-3">
-                  <label for="pago-seguro-online">Pago Seguro Online</label> 
-                  <input type="text" class="form-control" id="pago-seguro-online" placeholder="Nombre del titular" required>
+                  <input type="text" class="form-control" name="empresa" id="empresa" placeholder="Empresa (optional)">
               </div> </br>
               <div class="form-group">
-                  <textarea class="form-control" id="comentarios" rows="3" placeholder="Comentarios"></textarea>
+                  <textarea class="form-control" name="comentarios" id="comentarios" rows="3" placeholder="Comentarios"></textarea>
               </div> </br>
               <div class="form-group">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="condiciones">
-                    <label class="form-check-label" for="condiciones">Sí, quiero hacerme miembro de Fast Hotel y acepto los términos y condiciones</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="privacidad">
-                    <label class="form-check-label" for="privacidad">	Acepto la política de cancelación/pago, otras condiciones y conozco la política de privacidad de la reserva.</label>
-                </div>
-            </div> </br>
-            <button type="submit" class="btn btn-primary d-none d-lg-block">Proceder al pago</button>
+                  <div class="panel panel-default credit-card-box">
+                      <div class="panel-heading display-table">
+                          <div class="row display-tr">
+                              <h3 class="panel-title display-td">Payment Details</h3> 
+                              <div class="display-td">
+                              </div>
+                          </div>
+                      </div>  <br>
+                      <div class="panel-body">
+                          <div class="row">
+                              <div class="col-xs-12">
+                                <div class="form-group">
+                                  <label for="payment_method">Método de Pago</label>
+                                  <select class="form-control" name="payment_method" id="payment_method" required>
+                                      <option value="">Seleccione un método de pago</option>
+                                      {% for method in payment_methods %}
+                                          <option value="{{ method.id }}">{{ method.payment_type }}</option>
+                                      {% endfor %}
+                                  </select>
+                              </div> <br>
+                                  <div class="form-group">
+                                      <label for="cardNumber">CARD NUMBER  &nbsp; <i class="fa fa-credit-card"></i></label>
+                                      <div class="input-group">
+                                          <input type="tel" class="form-control" name="cardNumber" placeholder="Valid Card Number" autocomplete="cc-number" required/>
+                                          <span class="input-group-addon"></span>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div> <br>
+                          <div class="row">
+                              <div class="col-xs-7 col-md-7">
+                                  <div class="form-group">
+                                      <label for="cardExpiry"><span class="hidden-xs">EXPIRATION</span><span class="visible-xs-inline">EXP</span> DATE</label>
+                                      <input type="tel" class="form-control" name="cardExpiry" placeholder="MM / YY" autocomplete="cc-exp" required />
+                                  </div>
+                              </div>
+                              <div class="col-xs-5 col-md-5 pull-right">
+                                  <div class="form-group">
+                                      <label for="cardCVC">CV CODE</label>
+                                      <input type="tel" class="form-control" name="cardCVC" placeholder="CVC" autocomplete="cc-csc" required />
+                                  </div>
+                              </div>
+                          </div>  <br>
+                          <div class="row">
+                              <div class="col-xs-12">
+                                  <div class="form-group">
+                                      <label for="couponCode">COUPON CODE</label>
+                                      <input type="text" class="form-control" name="couponCode" />
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                          </div>
+                          <div class="row" style="display:none;">
+                              <div class="col-xs-12">
+                                  <p class="payment-errors"></p>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div> </br>
+              
+              <div class="form-group">
+                  <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="condiciones" id="condiciones">
+                      <label class="form-check-label" for="condiciones">Sí, quiero hacerme miembro de Fast Hotel y acepto los términos y condiciones</label>
+                  </div>
+                  <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="privacidad" id="privacidad">
+                      <label class="form-check-label" for="privacidad"> Acepto la política de cancelación/pago, otras condiciones y conozco la política de privacidad de la reserva.</label>
+                  </div>
+              </div>
+          
+              </br>
+              <button type="submit" class="btn btn-primary d-none d-lg-block">Pagar</button>
           </form>
-      </div>
-      <div class="col-lx-5 col-lg-5 m-3 col-md-12 col-sm-12 col-xs-12 m-3 border bg-light">
-        <div class="container">
-          <div class="row">
-              <div class="col-4 p-3">
-                <h5 class="text-muted">Entrada</h5>
-                <p class="date" id="check-in-date"></p>
+        </div>
+        <div class="col-lx-5 col-lg-5 m-3 col-md-12 col-sm-12 col-xs-12 m-3 border bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4 p-3">
+                        <h5 class="text-muted">Entrada</h5>
+                        <p class="date" id="check-in-date"></p>
+                    </div>
+                    <div class="col-1 d-flex justify-content-center align-items-center space">
+                        <i class="bi bi-arrow-right fs-2"></i>
+                    </div>
+                    <div class="col-4 p-3">
+                        <h5 class="text-muted">Salida</h5>
+                        <p class="date" id="check-out-date"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <p class="text-muted" id="stay-duration"></p>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-6">
+                      <p class="text-muted">Base</p>
+                      <p class="text-muted">4.5% Impuesto</p>
+                      <h6>Total de la reserva</h6>
+                  </div>
+                  <div class="col-6">
+                      <p id="rent"></p>
+                      <p id="tax"></p>
+                      <p id="total"></p>
+                  </div>
+                  <br>
+                  <hr>
+                  <div class="row">
+                      <div class="col-lx-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                          {% if image %}
+                          <div class="thumbnail">
+                              <img src="{{ image }}" alt="Room Image" class="img-thumbnail">
+                          </div>
+                          {% endif %}
+                      </div>
+
+
+                      <div class="col-lx-8 col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                          <h5>{{category}}</h5>
+                          <p>{{description}} (2 Adultos + 2 niños): Quédese 2 noches o más y consiga un 18% de
+                              descuento</p>
+                      </div>
+                      <br>
+                      <div class="scroll-box" id="datePriceBox">
+                      </div>
+                  </div>
               </div>
-              <div class="col-1 d-flex justify-content-center align-items-center space">
-                  <i class="bi bi-arrow-right fs-2"></i> 
+              <hr>
+              <div class="row">
+                  <div class="col-12 other-information">
+                      <p class="text-muted text-sm"> <strong>Pago:</strong> Prepago de 100%: Pago seguro online</p>
+                      <p class="text-muted text-md"> <strong>Cancelación:</strong> El hotel, cuando reciba la
+                          reserva, cobrará en su tarjeta la totalidad del importe. No se admite devolución en caso de
+                          anulación, salida anticipada o no presentarse (la reserva sólo se mantendría la primera
+                          noche). Si el pago fuera denegado, el hotel anularía su reserva.</p>
+                      <p class="text-muted text-lg"> <strong>Privacidad:</strong> Fast Hotel es responsable del
+                          tratamiento de tus datos, que serán usados para la gestión de tu reserva y, si lo hubieras
+                          aceptado, para comunicaciones comerciales y alta en el club de fidelización. A través de
+                          email puedes ejercer derecho de acceso, rectificación, limitación del tratamiento y de la
+                          toma de decisiones individuales automatizadas. Leer política de privacidad.</p>
+                      <p class="text-muted text-xl"><strong>Otras condiciones:</strong> Tasa Turística no incluida
+                          3,14€ persona/noche</p>
+                  </div>
               </div>
-              <div class="col-4 p-3">
-                <h5 class="text-muted">Salida</h5>
-                <p class="date" id="check-out-date"></p>
-              </div>
-          </div>
-          <div class="row">
-            <p class="text-muted" id="stay-duration"></p>
+
           </div>
           <hr>
-          <div class="row">
-            <div class="col-6">
-              <p class="text-muted">Base</p>
-              <p class="text-muted">4.5% Impuesto</p>
-              <h6>Total de la reserva</h6>
-          </div>
-          <div class="col-6">
-              <p id="rent"></p>
-              <p id="tax"></p>
-              <p id="total"></p>
-          </div><br>
-        <hr>
-        <div class="row">
-          <div class="col-lx-4 col-lg-4 col-md-12 col-sm-12 col-xs-12">
-            {% if image %}
-            <div class="thumbnail">
-                <img src="{{ image }}" alt="Room Image" class="img-thumbnail">
-            </div>
-            {% endif %}
-          </div>
-        
-         
-          <div class="col-lx-8 col-lg-8 col-md-12 col-sm-12 col-xs-12">
-            <h5>{{category}}</h5>
-            <p>{{description}} (2 Adultos + 2 niños): Quédese 2 noches o más y consiga un 18% de descuento</p>
-          </div> <br>
-            <div class="scroll-box" id="datePriceBox">
-            </div>
-          </div>
-        </div>
-        <hr>
-        <div class="row">
-          <div class="col-12 other-information">
-            <p class="text-muted text-sm"> <strong>Pago:</strong> Prepago de 100%: Pago seguro online</p>
-            <p class="text-muted text-md"> <strong>Cancelación:</strong> El hotel, cuando reciba la reserva, cobrará en su tarjeta la totalidad del importe. No se admite devolución en caso de anulación, salida anticipada o no presentarse (la reserva sólo se mantendría la primera noche). Si el pago fuera denegado, el hotel anularía su reserva.</p>
-            <p class="text-muted text-lg"> <strong>Privacidad:</strong> Fast Hotel es responsable del tratamiento de tus datos, que serán usados para la gestión de tu reserva y, si lo hubieras aceptado, para comunicaciones comerciales y alta en el club de fidelización. A través de email puedes ejercer derecho de acceso, rectificación, limitación del tratamiento y de la toma de decisiones individuales automatizadas. Leer política de privacidad.</p>
-            <p class="text-muted text-xl"><strong>Otras condiciones:</strong> Tasa Turística no incluida 3,14€ persona/noche</p>
-        </div>
-        </div>
-
       </div>
-    <hr>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary d-block d-lg-none">Proceder al pago</button>
+      <button type="submit" class="btn btn-primary d-block d-lg-none">Pagar</button>
 
-      </div>
   </div>
 </div>
+</div>
+</div>
 <script>
-      function getCookie(name) {
-          let value = "; " + document.cookie;
-          let parts = value.split("; " + name + "=");
-          if (parts.length == 2) return parts.pop().split(";").shift();
+  function getCookie(name) {
+      let value = "; " + document.cookie;
+      let parts = value.split("; " + name + "=");
+      if (parts.length == 2) return parts.pop().split(";").shift();
+  }
+
+  function formatDate(dateString) {
+      const options = {
+          weekday: 'short',
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric'
+      };
+      return new Date(dateString).toLocaleDateString('es-ES', options);
+  }
+
+  function getNumberOfDays(startDate, endDate) {
+      const start = new Date(startDate).getTime();
+      const end = new Date(endDate).getTime();
+      const difference = end - start;
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      return days;
+  }
+
+  const reservationData = getCookie("reservation_data");
+  if (reservationData) {
+      const data = JSON.parse(reservationData);
+      const checkInDateFormatted = formatDate(data.check_in_date);
+      const checkOutDateFormatted = formatDate(data.check_out_date);
+
+      console.log(data)
+      console.log(data.check_in_date)
+      console.log(data.check_out_date)
+      console.log(data.adults)
+      console.log(data.children)
+
+      document.querySelector("input[name='adults']").value = data.adults;
+      document.querySelector("input[name='children']").value = data.children;
+      document.getElementById("check_in_date_input").value = data.check_in_date;
+      document.getElementById("check_out_date_input").value = data.check_out_date;
+
+      document.getElementById("check-in-date").textContent = checkInDateFormatted;
+      document.getElementById("check-out-date").textContent = checkOutDateFormatted;
+
+      
+
+      const numberOfDays = getNumberOfDays(data.check_in_date, data.check_out_date) + 1;
+
+      document.getElementById("stay-duration").textContent = `Estancia de ${numberOfDays} noches`;
+
+      const totalPrice = data.rent * numberOfDays;
+
+      const taxRate = 0.045; // 4.5%
+      const taxAmount = totalPrice * taxRate;
+
+      const finalAmount = totalPrice + taxAmount;
+
+      document.getElementById("rent").textContent += " " + totalPrice.toFixed(2) + " €";
+      document.getElementById("tax").textContent += " " + taxAmount.toFixed(2) + " €";
+      document.getElementById("total").textContent += " " + finalAmount.toFixed(2) + " €";
+
+      const datePriceBox = document.getElementById("datePriceBox");
+      for (let i = 0; i < numberOfDays; i++) {
+          const currentDate = new Date(data.check_in_date);
+          currentDate.setDate(currentDate.getDate() + i);
+          const formattedDate = formatDate(currentDate);
+
+          const rowElement = document.createElement("div");
+          rowElement.classList.add("row", "price-item");
+
+          if (i % 2 === 0) {
+              rowElement.classList.add("even");
+          } else {
+              rowElement.classList.add("odd");
+          }
+
+          const iconColumn = document.createElement("div");
+          iconColumn.classList.add("col-auto");
+          const dateIcon = document.createElement("i");
+          dateIcon.classList.add("bi", "bi-calendar");
+          dateIcon.setAttribute("aria-hidden", "true");
+          iconColumn.appendChild(dateIcon);
+
+          const dateColumn = document.createElement("div");
+          dateColumn.classList.add("col");
+          const dateText = document.createTextNode(formattedDate);
+          dateColumn.appendChild(dateText);
+
+          const alojamientoColumn = document.createElement("div");
+          alojamientoColumn.classList.add("col");
+          const alojamientoText = document.createTextNode("Alojamiento");
+          alojamientoColumn.appendChild(alojamientoText);
+
+          const priceColumn = document.createElement("div");
+          priceColumn.classList.add("col-auto");
+          const priceText = document.createTextNode(data.rent + " €");
+          priceColumn.appendChild(priceText);
+
+          rowElement.appendChild(iconColumn);
+          rowElement.appendChild(dateColumn);
+          rowElement.appendChild(alojamientoColumn);
+          rowElement.appendChild(priceColumn);
+
+          datePriceBox.appendChild(rowElement);
+
+          rowElement.style.marginBottom = "10px";
       }
-
-      function formatDate(dateString) {
-          const options = { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' };
-          return new Date(dateString).toLocaleDateString('es-ES', options);
-      }
-
-      function getNumberOfDays(startDate, endDate) {
-          const start = new Date(startDate).getTime();
-          const end = new Date(endDate).getTime();
-          const difference = end - start;
-          const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-          return days;
-      }
-
-      const reservationData = getCookie("reservation_data");
-    if (reservationData) {
-        const data = JSON.parse(reservationData);
-        const checkInDateFormatted = formatDate(data.check_in_date);
-        const checkOutDateFormatted = formatDate(data.check_out_date);
-        
-        document.getElementById("check-in-date").textContent = checkInDateFormatted;
-        document.getElementById("check-out-date").textContent = checkOutDateFormatted;
-
-        const numberOfDays = getNumberOfDays(data.check_in_date, data.check_out_date) + 1;
-        
-        document.getElementById("stay-duration").textContent = `Estancia de ${numberOfDays} noches`;
-
-        const totalPrice = data.rent * numberOfDays;
-        
-        const taxRate = 0.045; // 4.5%
-        const taxAmount = totalPrice * taxRate;
-        
-        const finalAmount = totalPrice + taxAmount;
-
-        document.getElementById("rent").textContent += " " + totalPrice + " €";
-        document.getElementById("tax").textContent += " " + taxAmount.toFixed(2) + " €"; 
-        document.getElementById("total").textContent += " " + finalAmount.toFixed(2) + " €"; 
-
-        const datePriceBox = document.getElementById("datePriceBox");
-        for (let i = 0; i < numberOfDays ; i++) {
-            const currentDate = new Date(data.check_in_date);
-            currentDate.setDate(currentDate.getDate() + i);
-            const formattedDate = formatDate(currentDate);
-
-            const rowElement = document.createElement("div");
-            rowElement.classList.add("row", "price-item");
-
-            if (i % 2 === 0) {
-                rowElement.classList.add("even");
-            } else {
-                rowElement.classList.add("odd");
-            }
-
-            const iconColumn = document.createElement("div");
-            iconColumn.classList.add("col-auto");
-            const dateIcon = document.createElement("i");
-            dateIcon.classList.add("bi", "bi-calendar");
-            dateIcon.setAttribute("aria-hidden", "true");
-            iconColumn.appendChild(dateIcon);
-
-            const dateColumn = document.createElement("div");
-            dateColumn.classList.add("col");
-            const dateText = document.createTextNode(formattedDate);
-            dateColumn.appendChild(dateText);
-
-            const alojamientoColumn = document.createElement("div");
-            alojamientoColumn.classList.add("col");
-            const alojamientoText = document.createTextNode("Alojamiento");
-            alojamientoColumn.appendChild(alojamientoText);
-
-            const priceColumn = document.createElement("div");
-            priceColumn.classList.add("col-auto");
-            const priceText = document.createTextNode(data.rent +  " €");
-            priceColumn.appendChild(priceText);
-
-            rowElement.appendChild(iconColumn);
-            rowElement.appendChild(dateColumn);
-            rowElement.appendChild(alojamientoColumn);
-            rowElement.appendChild(priceColumn);
-
-            datePriceBox.appendChild(rowElement);
-
-            rowElement.style.marginBottom = "10px"; 
-        }
-
-
-    }
-      </script>
+  }
+</script>
 {% endblock %}
+

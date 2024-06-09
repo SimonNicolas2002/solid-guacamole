@@ -8,8 +8,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from .forms import ReservationForm, AnonymousReservationForm
-from .models import CustomUser, Room, Reservation, AbstractUser
+from .forms import ReservationForm
+from .models import CustomUser, Room, Reservation, AbstractUser, Metodo_pago  
 import logging
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView
@@ -21,6 +21,7 @@ from datetime import datetime
 from django.http import HttpResponseNotFound
 from django.template import TemplateDoesNotExist
 from django.core.paginator import Paginator
+from django.http import HttpResponseForbidden, HttpResponseNotAllowed
 
 
 def logout_view(request):
@@ -71,12 +72,12 @@ def make_reservation(request):
                     check_out_date=check_out_date,
                     status='CONFIRMED'
                 )
-
+                reservation.save()
                 room.occupied = True
                 room.save()
 
                 logger.info(f"Reservation made for room {room.room_number}. Room is now occupied.")
-                return redirect('services')
+                return redirect('reservations')
             else:
                 logger.error("Form is invalid.")
         else:
@@ -88,50 +89,69 @@ def make_reservation(request):
         return redirect('login')
 
 
-def make_anonymous_reservation(request):
-    if request.method == 'POST':
-        form = AnonymousReservationForm(request.POST)
-        if form.is_valid():
-            check_in_date = form.cleaned_data['check_in_date']
-            check_out_date = form.cleaned_data['check_out_date']
-            room_id = form.cleaned_data['room'].id
-            room = Room.objects.get(pk=room_id)
-
-            name = form.cleaned_data.get('name')
-            surname = form.cleaned_data.get('surname')
-
-            guest = None
-
-            reservation = Reservation.objects.create(
-                guest=guest,
-                name=name,
-                surname=surname,
-                hotel=room.hotel,
-                room=room,
-                check_in_date=check_in_date,
-                check_out_date=check_out_date,
-                status='CONFIRMED'
-            )
-
-            room.occupied = True
-            room.save()
-
-            logger.info(f"Reservation made for room {room.room_number}. Room is now occupied.")
-            return redirect('reservation_success')  # Redirect to the reservation success page
-        else:
-            logger.error("Form is invalid.")
-    else:
-        form = AnonymousReservationForm()
-
-    rooms = Room.objects.filter(occupied=False)
-    return render(request, 'hotel/anon_reservation.html', {'form': form, 'rooms': rooms})
-
-
 @login_required
 def reservas(request):
-    current_reservations = Reservation.objects.filter(guest=request.user, status__in=['PENDING', 'CONFIRMED'])
-    reservation_history = Reservation.objects.filter(guest=request.user, status__in=['CANCELLED', 'COMPLETED'])
-    return render(request, 'hotel/reservas.html', {'current_reservations': current_reservations, 'reservation_history': reservation_history})
+    try:
+        if request.method == 'POST':
+            room_id = request.POST.get('room_id')
+            room = get_object_or_404(Room, pk=room_id)
+
+            custom_data = {
+                'name': request.POST.get('nombre'),
+                'surname': request.POST.get('apellido'),
+                'adults': request.POST.get('adults'),
+                'children': request.POST.get('children'),
+                'check_in_date': request.POST.get('check_in_date'),
+                'check_out_date': request.POST.get('check_out_date'),
+                'room': room,
+                'hotel': room.hotel,  
+                'payment_method': request.POST.get('payment_method'),
+            }
+
+
+            form = ReservationForm(custom_data)
+            if form.is_valid():
+                check_in_date = form.cleaned_data['check_in_date']
+                check_out_date = form.cleaned_data['check_out_date']
+                name = form.cleaned_data['name']
+                surname = form.cleaned_data['surname']
+
+                if room.occupied:
+                    messages.error(request, 'Room is already occupied.')
+                    return redirect('index')
+
+                if isinstance(request.user, AnonymousUser) or not request.user.is_authenticated:
+                    return redirect('login')
+
+                reservation = form.save(commit=False)
+                reservation.guest = request.user
+                reservation.name = name
+                reservation.name = surname
+                reservation.hotel = room.hotel
+                reservation.room = room
+                reservation.check_in_date = check_in_date
+                reservation.check_out_date = check_out_date
+                reservation.status = 'CONFIRMED'
+                reservation.save()
+
+                room.occupied = True
+                room.save()
+
+                logger.info(f"Reservation made for room {room.room_number}. Room is now occupied.")
+                return redirect('reservations')
+            else:
+                print(form.errors)
+        else:
+            form = ReservationForm()
+
+        current_reservations = Reservation.objects.filter(guest=request.user, status__in=['PENDING', 'CONFIRMED'])
+        reservation_history = Reservation.objects.filter(guest=request.user, status__in=['CANCELLED', 'COMPLETED'])
+
+        
+
+        return render(request, 'hotel/reservas.html', {'current_reservations': current_reservations, 'reservation_history': reservation_history})
+    except PermissionDenied:
+        return redirect('login')
 
 
 def booking_step(request):
@@ -179,8 +199,10 @@ def booking_step(request):
 
 def payment(request, room_id):
     room = get_object_or_404(Room, id=room_id)
+    payment_methods = Metodo_pago.objects.all()
 
     context = {
+        'room_id': room.id,
         'room_number': room.room_number,
         'image': room.image.url if room.image else None,
         'category': room.category,
@@ -196,7 +218,26 @@ def payment(request, room_id):
         'description': room.description,
         'hotel': room.hotel,
         'num_toilets': room.num_toilets,
-        'num_beds': room.num_beds
+        'num_beds': room.num_beds,
+        'hotel': room.hotel,
+        'payment_methods': payment_methods
     }
 
     return render(request, 'hotel/payment.html', context)
+
+
+def cancel_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, pk=reservation_id)
+    
+    if request.method == 'POST':
+        if reservation.guest == request.user:
+            reservation.status = 'CANCELLED'
+            reservation.save()
+            room = reservation.room
+            room.occupied = False
+            room.save()
+            return redirect('reservations')
+        else:
+            return HttpResponseForbidden("You are not authorized to cancel this reservation.")
+    elif request.method == 'GET':
+        return HttpResponseNotAllowed(["POST"])

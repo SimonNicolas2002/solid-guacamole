@@ -1,61 +1,153 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/nav.css' %}">
-{% endblock %}
-{% block content %}
-<div class="container p-5 m-5">
-	<div class="row">
-		<h1>Current Reservations</h1>
-	</div>
-</div>
-{% if current_reservations %}
-	{% for reservation in current_reservations %}
-		<div class="card">
-			<div class="card-body">
-				<h5 class="card-title">Reservation ID: {{ reservation.pk }}</h5>
-				<p class="card-text">Check-in Date: {{ reservation.check_in_date }}</p>
-				<p class="card-text">Check-out Date: {{ reservation.check_out_date }}</p>
-				<p class="card-text">Status: {{ reservation.status }}</p>
-			</div>
-		</div>
-	{% endfor %}
-{% else %}
-<div class="container p-5 m-5">
-	<div class="row p-5">
-		<p>No current reservations.</p>
-	</div>
-</div>
-{% endif %}
-<div class="container p-5 m-5">
-	<div class="row">
-		<h1>Reservation History</h1>
-	</div>
-</div>
-{% if reservation_history %}
-<div class="container p-5 m-5">
-	<div class="row">
-	{% for reservation in reservation_history %}
-		<div class="col-3">
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">Reservation ID: {{ reservation.pk }}</h5>
-					<p class="card-text">Check-in Date: {{ reservation.check_in_date }}</p>
-					<p class="card-text">Check-out Date: {{ reservation.check_out_date }}</p>
-					<p class="card-text">Status: {{ reservation.status }}</p>
-				</div>
-			</div>
-		</div>
-	
-	{% endfor %}
-	</div>
-</div>
-{% else %}
-		<div class="container p-5 m-5">
-			<div class="row p-5">
-				<div class="col-12 "><p>No reservation history.</p></div>
-			</div>
-		</div>
-{% endif %}
+{% load humanize %}
 
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/nav.css' %}">
+<style>
+    .card {
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 0.25rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+	body {
+    background-color: rgb(244, 248, 253);
+
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col mb-4"> <br>
+            <h1>Reservas Actuales</h1>
+        </div>
+    </div>
+    <div class="row">
+        {% if current_reservations %}
+        {% for reservation in current_reservations %}
+		<form action="{% url 'cancel_reservation' reservation.pk %}" method="post" class="col-md-4 mb-4">
+		{% csrf_token %}
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title mb-3">Category: {{ reservation.room.category }}</h5>
+                    {% if reservation.room.image %}
+                    <img src="{{ reservation.room.image.url }}" class="card-img-top border rounded-2 mb-3 w-100" alt="Room Image">
+                    {% else %}
+					<div class="text-center text-muted mt-3 mb-3 d-flex justify-content-center align-items-center" style="min-width: 235px;  min-height: 235px; max-height: 200px;">
+                        <p class="text-muted mb-3">No image available</p>
+                    </div>
+                    {% endif %}
+                    <p class="card-text mb-1">Name: {{ reservation.name }}</p>
+                    <p class="card-text mb-1">Surname: {{ reservation.surname }}</p>
+                    <p class="card-text mb-1" id="check_in_date">Check-in Date: {{ reservation.check_in_date }}</p>
+                    <p class="card-text mb-1" id="check_out_date">Check-out Date: {{ reservation.check_out_date }}</p>
+                    <p class="card-text mb-1">Status: {{ reservation.status }}</p>
+                    <p class="card-text mb-1">Room number: {{ reservation.room.room_number }}</p>
+                    <p class="card-text mb-1">State: {{ reservation.room.state }}</p>
+                    <p class="card-text mb-1">Children: {{ reservation.room.children }}</p>
+                    <p class="card-text mb-1">Adults: {{ reservation.room.adults }}</p>
+                    <p class="card-text mb-1">Rent night: {{ reservation.room.rent|floatformat:2 }} €</p><br>
+					<p class="card-text mb-1" id="rent" style="display: none;">{{ reservation.room.rent|floatformat:2 }}</p><br>
+					<h6 class="card-text mb-1" id="total">Total + IVA:  </h6><br>
+
+					<button type="submit" class="btn btn-danger mt-auto">Cancel</a>
+
+                </div>
+            </div>
+		</form>
+        {% endfor %}
+        {% else %}
+        <div class="col p-5 m-5">
+            <p>No current reservations.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col mb-4">
+			<h1>Historial de Reservas</h1>
+        </div>
+    </div>
+    <div class="row">
+        {% if reservation_history %}
+        {% for reservation in reservation_history %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column">
+					<h5 class="card-title mb-3">Category: {{ reservation.room.category }}</h5>
+                    {% if reservation.room.image %}
+                    <img src="{{ reservation.room.image.url }}" class="card-img-top border rounded-2 mb-3 w-100" alt="Room Image">
+                    {% else %}
+					<div class="text-center text-muted mt-3 mb-3 d-flex justify-content-center align-items-center" style="min-width: 235px;  min-height: 235px; max-height: 200px;">
+                        <p class="text-muted mb-3">No image available</p>
+                    </div>
+                    {% endif %}
+                    <p class="card-text mb-1">Name: {{ reservation.name }}</p>
+                    <p class="card-text mb-1">Surname: {{ reservation.surname }}</p>
+                    <p class="card-text mb-1">Check-in Date: {{ reservation.check_in_date }}</p>
+                    <p class="card-text mb-1">Check-out Date: {{ reservation.check_out_date }}</p>
+                    <p class="card-text mb-1">Status: {{ reservation.status }}</p>
+                    <p class="card-text mb-1">Room number: {{ reservation.room.room_number }}</p>
+                    <p class="card-text mb-1">State: {{ reservation.room.state }}</p>
+                    <p class="card-text mb-1">Children: {{ reservation.room.children }}</p>
+                    <p class="card-text mb-1">Adults: {{ reservation.room.adults }}</p>
+                    <p class="card-text mb-1">Rent: {{ reservation.room.rent|floatformat:2 }} €</p><br>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col p-5 m-5">
+            <p>No reservation history.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		var checkInDateInput = document.getElementById("check_in_date");
+		var checkOutDateInput = document.getElementById("check_out_date");
+		var rentInput = document.getElementById("rent").textContent;
+		var totalPriceSpan = document.getElementById("total");
+		
+		console.log(checkInDateInput.textContent + " " + checkOutDateInput.textContent)
+		function calculateTotalPrice() {
+			var checkInDateString = document.getElementById("check_in_date").textContent;
+			var checkOutDateString = document.getElementById("check_out_date").textContent;
+
+			// Extract the date part from the strings
+			var checkInDateParts = checkInDateString.split(":")[1].trim();
+			var checkOutDateParts = checkOutDateString.split(":")[1].trim();
+
+			// Parse the date strings to Date objects
+			var checkInDate = new Date(checkInDateParts);
+			var checkOutDate = new Date(checkOutDateParts);
+
+
+			var rentValue = parseFloat(rentInput);
+
+			var ivaRate = 0.045; 
+	
+			var duration = (checkOutDate - checkInDate) / (1000 * 3600 * 24) + 1;
+			var totalPriceWithoutIVA = duration * rentValue;
+			var ivaAmount = totalPriceWithoutIVA * ivaRate;
+	
+			// Calculate the total price including IVA
+			var totalPriceWithIVA = totalPriceWithoutIVA + ivaAmount;
+	
+			// Update the UI with the total price including IVA
+			totalPriceSpan.textContent += totalPriceWithIVA.toFixed(2) + ' € (including IVA)';
+			console.log(totalPriceSpan)
+		}
+	
+		// Call calculateTotalPrice once the page is loaded
+		calculateTotalPrice();
+	});
+	</script>
 {% endblock %}
