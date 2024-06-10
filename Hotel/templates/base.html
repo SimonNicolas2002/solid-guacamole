@@ -39,6 +39,10 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'services' %}">Servicios</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'booking_step' %}">booking</a>
+                        </li>
                         
                         {% if user.is_authenticated %}
                             <li class="nav-item">

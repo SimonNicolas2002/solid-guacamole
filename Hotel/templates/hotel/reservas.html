@@ -11,53 +11,51 @@
         box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     }
 
-	body {
-    background-color: rgb(244, 248, 253);
-
-}
+    body {
+        background-color: rgb(244, 248, 253);
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="container my-5">
     <div class="row">
-        <div class="col mb-4"> <br>
+        <div class="col mb-4">
             <h1>Reservas Actuales</h1>
         </div>
     </div>
     <div class="row">
         {% if current_reservations %}
         {% for reservation in current_reservations %}
-		<form action="{% url 'cancel_reservation' reservation.pk %}" method="post" class="col-md-4 mb-4">
-		{% csrf_token %}
+        <form action="{% url 'cancel_reservation' reservation.pk %}" method="post" class="col-md-4 mb-4">
+            {% csrf_token %}
             <div class="card h-100">
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title mb-3">Category: {{ reservation.room.category }}</h5>
                     {% if reservation.room.image %}
                     <img src="{{ reservation.room.image.url }}" class="card-img-top border rounded-2 mb-3 w-100" alt="Room Image">
                     {% else %}
-					<div class="text-center text-muted mt-3 mb-3 d-flex justify-content-center align-items-center" style="min-width: 235px;  min-height: 235px; max-height: 200px;">
+                    <div class="text-center text-muted mt-3 mb-3 d-flex justify-content-center align-items-center" style="min-width: 235px; min-height: 235px; max-height: 200px;">
                         <p class="text-muted mb-3">No image available</p>
                     </div>
                     {% endif %}
                     <p class="card-text mb-1 p-2" style="background-color: rgb(239, 239, 239);">Name: {{ reservation.name }}</p>
                     <p class="card-text mb-1 p-2">Surname: {{ reservation.surname }}</p>
-                    <p class="card-text mb-1 p-2" style="background-color: rgb(239, 239, 239);" id="check_in_date">Check-in Date: {{ reservation.check_in_date }}</p>
-                    <p class="card-text mb-1 p-2"  id="check_out_date">Check-out Date: {{ reservation.check_out_date }}</p>
-                    <p class="card-text mb-1 p-2"  style="background-color: rgb(239, 239, 239);">Status: {{ reservation.status }}</p>
-                    <p class="card-text mb-1 p-2" >Room number: {{ reservation.room.room_number }}</p>
-                    <p class="card-text mb-1 p-2"  style="background-color: rgb(239, 239, 239);">State: {{ reservation.room.state }}</p>
-                    <p class="card-text mb-1 p-2" >Children: {{ reservation.room.children }}</p>
-                    <p class="card-text mb-1 p-2"  style="background-color: rgb(239, 239, 239);">Adults: {{ reservation.room.adults }}</p>
-                    <p class="card-text mb-1 p-2" >Rent night: {{ reservation.room.rent|floatformat:2 }} €</p><br>
-					<p class="card-text mb-1 p-2"  id="rent" style="display: none;">{{ reservation.room.rent|floatformat:2 }}</p><br>
-					<h6 class="card-text mb-1 p-2"  id="total">Total + IVA:  </h6><br>
+                    <p class="card-text mb-1 p-2" style="background-color: rgb(239, 239, 239);" id="check_in_date_{{ forloop.counter }}">Check-in Date: {{ reservation.check_in_date }}</p>
+                    <p class="card-text mb-1 p-2" id="check_out_date_{{ forloop.counter }}">Check-out Date: {{ reservation.check_out_date }}</p>
+                    <p class="card-text mb-1 p-2" style="background-color: rgb(239, 239, 239);">Status: {{ reservation.status }}</p>
+                    <p class="card-text mb-1 p-2">Room number: {{ reservation.room.room_number }}</p>
+                    <p class="card-text mb-1 p-2" style="background-color: rgb(239, 239, 239);">State: {{ reservation.room.state }}</p>
+                    <p class="card-text mb-1 p-2">Children: {{ reservation.room.children }}</p>
+                    <p class="card-text mb-1 p-2" style="background-color: rgb(239, 239, 239);">Adults: {{ reservation.room.adults }}</p>
+                    <p class="card-text mb-1 p-2">Rent night: {{ reservation.room.rent|floatformat:2 }} €</p><br>
+                    <p class="card-text mb-1 p-2" id="rent_{{ forloop.counter }}" style="display: none;">{{ reservation.room.rent|floatformat:2 }}</p><br>
+                    <h6 class="card-text mb-1 p-2" id="total_{{ forloop.counter }}">Total + IVA: </h6><br>
 
-					<button type="submit" class="btn btn-danger mt-auto">Cancel</a>
-
+                    <button type="submit" class="btn btn-danger mt-auto">Cancel</button>
                 </div>
             </div>
-		</form>
+        </form>
         {% endfor %}
         {% else %}
         <div class="col p-5 m-5">
@@ -70,7 +68,7 @@
 <div class="container my-5">
     <div class="row">
         <div class="col mb-4">
-			<h1>Historial de Reservas</h1>
+            <h1>Historial de Reservas</h1>
         </div>
     </div>
     <div class="row">
@@ -79,24 +77,24 @@
         <div class="col-md-4 mb-4">
             <div class="card h-100">
                 <div class="card-body d-flex flex-column">
-					<h5 class="card-title mb-3">Category: {{ reservation.room.category }}</h5>
+                    <h5 class="card-title mb-3">Category: {{ reservation.room.category }}</h5>
                     {% if reservation.room.image %}
                     <img src="{{ reservation.room.image.url }}" class="card-img-top border rounded-2 mb-3 w-100" alt="Room Image">
                     {% else %}
-					<div class="text-center text-muted mt-3 mb-3 d-flex justify-content-center align-items-center" style="min-width: 235px;  min-height: 235px; max-height: 200px;">
+                    <div class="text-center text-muted mt-3 mb-3 d-flex justify-content-center align-items-center" style="min-width: 235px; min-height: 235px; max-height: 200px;">
                         <p class="text-muted mb-3">No image available</p>
                     </div>
                     {% endif %}
                     <p class="card-text mb-1 p-2" style="background-color: rgb(239, 239, 239);">Name: {{ reservation.name }}</p>
-                    <p class="card-text mb-1   p-2">Surname: {{ reservation.surname }}</p>
-                    <p class="card-text mb-1  p-2"  style="background-color: rgb(239, 239, 239);">Check-in Date: {{ reservation.check_in_date }}</p>
-                    <p class="card-text mb-1  p-2">Check-out Date: {{ reservation.check_out_date }}</p>
-                    <p class="card-text mb-1  p-2"  style="background-color: rgb(239, 239, 239);">Status: {{ reservation.status }}</p>
-                    <p class="card-text mb-1  p-2">Room number: {{ reservation.room.room_number }}</p>
-                    <p class="card-text mb-1  p-2"  style="background-color: rgb(239, 239, 239);">State: {{ reservation.room.state }}</p>
-                    <p class="card-text mb-1  p-2">Children: {{ reservation.room.children }}</p>
-                    <p class="card-text mb-1 p-2"  style="background-color: rgb(239, 239, 239);">Adults: {{ reservation.room.adults }}</p>
-                    <p class="card-text mb-1  p-2" >Rent: {{ reservation.room.rent|floatformat:2 }} €</p><br>
+                    <p class="card-text mb-1 p-2">Surname: {{ reservation.surname }}</p>
+                    <p class="card-text mb-1 p-2" style="background-color: rgb(239, 239, 239);">Check-in Date: {{ reservation.check_in_date }}</p>
+                    <p class="card-text mb-1 p-2">Check-out Date: {{ reservation.check_out_date }}</p>
+                    <p class="card-text mb-1 p-2" style="background-color: rgb(239, 239, 239);">Status: {{ reservation.status }}</p>
+                    <p class="card-text mb-1 p-2">Room number: {{ reservation.room.room_number }}</p>
+                    <p class="card-text mb-1 p-2" style="background-color: rgb(239, 239, 239);">State: {{ reservation.room.state }}</p>
+                    <p class="card-text mb-1 p-2">Children: {{ reservation.room.children }}</p>
+                    <p class="card-text mb-1 p-2" style="background-color: rgb(239, 239, 239);">Adults: {{ reservation.room.adults }}</p>
+                    <p class="card-text mb-1 p-2">Rent: {{ reservation.room.rent|floatformat:2 }} €</p><br>
                 </div>
             </div>
         </div>
@@ -110,44 +108,35 @@
 </div>
 
 <script>
-	document.addEventListener("DOMContentLoaded", function () {
-		var checkInDateInput = document.getElementById("check_in_date");
-		var checkOutDateInput = document.getElementById("check_out_date");
-		var rentInput = document.getElementById("rent").textContent;
-		var totalPriceSpan = document.getElementById("total");
-		
-		console.log(checkInDateInput.textContent + " " + checkOutDateInput.textContent)
-		function calculateTotalPrice() {
-			var checkInDateString = document.getElementById("check_in_date").textContent;
-			var checkOutDateString = document.getElementById("check_out_date").textContent;
+    document.addEventListener("DOMContentLoaded", function () {
+        var reservations = document.querySelectorAll(".card");
 
-			// Extract the date part from the strings
-			var checkInDateParts = checkInDateString.split(":")[1].trim();
-			var checkOutDateParts = checkOutDateString.split(":")[1].trim();
+        reservations.forEach(function (reservation, index) {
+            var checkInDateElement = document.getElementById(`check_in_date_${index + 1}`);
+            var checkOutDateElement = document.getElementById(`check_out_date_${index + 1}`);
+            var rentElement = document.getElementById(`rent_${index + 1}`);
+            var totalElement = document.getElementById(`total_${index + 1}`);
 
-			// Parse the date strings to Date objects
-			var checkInDate = new Date(checkInDateParts);
-			var checkOutDate = new Date(checkOutDateParts);
+            if (checkInDateElement && checkOutDateElement && rentElement && totalElement) {
+                var checkInDateString = checkInDateElement.textContent.split(":")[1].trim();
+                var checkOutDateString = checkOutDateElement.textContent.split(":")[1].trim();
 
+                var checkInDate = new Date(checkInDateString);
+                var checkOutDate = new Date(checkOutDateString);
 
-			var rentValue = parseFloat(rentInput);
+                var rentValue = parseFloat(rentElement.textContent);
 
-			var ivaRate = 0.045; 
-	
-			var duration = (checkOutDate - checkInDate) / (1000 * 3600 * 24) + 1;
-			var totalPriceWithoutIVA = duration * rentValue;
-			var ivaAmount = totalPriceWithoutIVA * ivaRate;
-	
-			// Calculate the total price including IVA
-			var totalPriceWithIVA = totalPriceWithoutIVA + ivaAmount;
-	
-			// Update the UI with the total price including IVA
-			totalPriceSpan.textContent += totalPriceWithIVA.toFixed(2) + ' € (including IVA)';
-			console.log(totalPriceSpan)
-		}
-	
-		// Call calculateTotalPrice once the page is loaded
-		calculateTotalPrice();
-	});
-	</script>
+                var ivaRate = 0.045;
+
+                var duration = (checkOutDate - checkInDate) / (1000 * 3600 * 24) + 1;
+                var totalPriceWithoutIVA = duration * rentValue;
+                var ivaAmount = totalPriceWithoutIVA * ivaRate;
+
+                var totalPriceWithIVA = totalPriceWithoutIVA + ivaAmount;
+
+                totalElement.textContent += totalPriceWithIVA.toFixed(2) + ' € (including IVA)';
+            }
+        });
+    });
+</script>
 {% endblock %}
